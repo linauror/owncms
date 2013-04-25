@@ -1,4 +1,4 @@
-#关于OWNCMS#
+#关于OWNCMS
 
 OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久之前写的，前台演示模板来源于wordpress默认模板。
 
@@ -8,10 +8,10 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久之前写的，前台演示模板来
 
 官网：http://owncms.linauror.com/
 
-安装步骤：
+#安装步骤：
 
-1，解压程序文件到网站根目录
+*解压程序文件到网站根目录
 
-2，导入owncms.sql，修改application/config/database.php中的数据库地址、账号、密码、数据库名信息。
+*导入·owncms.sql·，修改·application/config/database.php·中的数据库地址、账号、密码、数据库名信息。
 
-3，默认重写的url，如服务器不支持URL重写，可修改application/config/config.php中$config['index_page']的值改为index.php，并删除根目录下.htaccess。
+*默认重写的url，如服务器不支持URL重写，可修改application/config/config.php中$config['index_page']的值改为index.php，并删除根目录下.htaccess。
