@@ -34,7 +34,7 @@
         </div>
         <?php }?>
         <?php if($post['comment_status']) {?>
-        <div id="respond">
+        <div id="respond" class="form">
             <h3>发表评论</h3>
             <form method="post" action="<?php echo site_url('post/ACT_comment_submit');?>" onsubmit="return check_comment_submit();">
                 <input type="hidden" name="current_url" value="<?php echo current_url();?>" />
