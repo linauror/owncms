@@ -21,23 +21,19 @@
                 <p>账号/邮箱 <span class="required">*</span></p>
                 <p><input type="text" name="username" class="username" value="" /></p>
                 <p>密码 <span class="required">*</span></p>
-                <p><input type="text" name="password" class="password" value="" /></p>
+                <p><input type="password" name="password" class="password" value="" /></p>
                 <p><input type="submit" value="登录" class="comment_submit" /><input type="checkbox" value="2592000" name="expired" id="expired" /> <label for="expired">保持登录</label></p>
             </form>
             <script type="text/javascript">
             function checklogin_form() {
-                if ($('#respond .username').val().length < 1) {
-                    alert('姓名不能为空，请填写！');
-                    $('#respond .username').focus();
+                if ($('.form .username').val().length < 1) {
+                    alert('账号/邮箱不能为空！');
+                    $('.form .username').focus();
                     return false;
-                } else if ($('#respond .usermail').val().length < 6) {
-                    alert('电子邮件不能为空，请填写！');
-                    $('#respond .usermail').focus();
+                } else if ($('.form .password').val().length < 1) {
+                    alert('密码不能为空！');
+                    $('.form .password').focus();
                     return false;                    
-                } else if ($('#respond .content').val().length < 1) {
-                    alert('评论内容不能为空，请填写！');
-                    $('#respond .content').focus();
-                    return false;                      
                 }
             }
             </script>
