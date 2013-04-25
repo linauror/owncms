@@ -20,7 +20,7 @@ class Post_mdl extends CI_Model
     const TABLE_CATEGORY = 'category';
     const TABLE_COMMENT = 'comment';
     
-    public $templates = array('post' => '默认[post]', 'file' => '包含下载[file]');
+    public $templates = array('post' => '默认[post]');
     
     /**
      * 构造函数
