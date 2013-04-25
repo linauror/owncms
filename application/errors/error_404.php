@@ -57,7 +57,7 @@ p {
 	<div id="container">
 		<h1>页面没有找到</h1>
 		<p style="font-size: 60px; line-height:100px; text-align:center;">404</p>
-        <p><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.go(-1);'?>" title="返回上页" >返回上页</a> <a href="<?php echo base_url();?>">返回首页</a></p>
+        <p><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.go(-1);'?>" title="返回上页" >返回上页</a> <a href="/">返回首页</a></p>
 	</div>
 </body>
 </html>

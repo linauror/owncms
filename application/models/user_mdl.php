@@ -305,10 +305,10 @@ class User_mdl extends CI_Model
      * 检测是否登录
      * @return void
      */
-    public function checklogin()
+    public function checklogin($uri = 'admin/login')
     {
         if (!$this->uid) {
-            show_message('请先登录','admin/login?refer='.current_url());
+            show_message('请先登录',$uri.'?refer='.current_url());
         }
     }    
 

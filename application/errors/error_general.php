@@ -26,7 +26,7 @@ p { margin: 12px 15px 12px 15px; }
 <div id="container">
   <h1><?php echo $heading ?></h1>
   <?php echo $message; ?>
-  <p><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.go(-1);'?>" title="返回上页" >返回上页</a> <a href="<?php echo base_url();?>" title="返回首页">返回首页</a></p>
+  <p><a href="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'javascript:history.go(-1);'?>" title="返回上页" >返回上页</a> <a href="/" title="返回首页">返回首页</a></p>
 </div>
 </body>
 </html>

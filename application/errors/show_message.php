@@ -26,7 +26,7 @@ p { margin: 12px 15px 12px 15px; }
 <div id="container">
   <h1><?php echo $heading ?></h1>
   <?php echo $message; ?>
-  <p><a href="<?php echo $rurl ? site_url($rurl) : $_SERVER['HTTP_REFERER'];?>" title="点击跳转" >点击跳转</a>  <a href="<?php echo base_url();?>">返回首页</a></p>
+  <p><a href="<?php echo $rurl ? site_url($rurl) : $_SERVER['HTTP_REFERER'];?>" title="点击跳转" >点击跳转</a>  <a href="/">返回首页</a></p>
 </div>
 </body>
 </html>

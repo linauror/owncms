@@ -164,7 +164,7 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 #respond form p input.comment_submit{ cursor: pointer; width: 100px;}
 
 /*作者作品*/
-.left_con .author_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1;}
+.left_con .author_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1; display: none;}
 .left_con .author_info:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .left_con .author_info a.avatar{ float: left; margin-right: 40px;}
 

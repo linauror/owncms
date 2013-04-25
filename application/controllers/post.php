@@ -34,7 +34,6 @@ class Post extends CI_Controller
         $html['thetag'] = $thetag;
         $html['comments_list'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 1000, 'pid' => $post['id'], 'orderby' => 'id ASC', 'onlylist' => true));
         $html['near_post'] = $this->Post_mdl->get_near_post($post['id'], 'slug,category,title');
-        $html['user_info'] = $this->User_mdl->get('username,usermail,userurl,logedtime,group', $this->User_mdl->uid);
         $html['post_hot'] = $this->Post_mdl->get_list(array('select' => 'category,title,slug,click,posttime', 'ishidden' => 0, 'limit' => 10, 'posttime' => true, 'orderby' => 'click DESC', 'onlylist' => true));
         $html['comments_new'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 10, 'onlylist' => true));
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));

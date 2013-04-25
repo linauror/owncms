@@ -42,7 +42,6 @@ class Tag extends CI_Controller
         $html['categorys'] = $categorys;
         $html['post_list'] = $post_list['list'];
         $html['pagination'] = $this->pagination->create_links();
-        $html['user_info'] = $this->User_mdl->get('username,usermail,userurl,logedtime,group', $this->User_mdl->uid);
         $html['post_hot'] = $this->Post_mdl->get_list(array('select' => 'category,title,slug,click,posttime', 'ishidden' => 0, 'limit' => 10, 'posttime' => true, 'orderby' => 'click DESC'));
         $html['comments_new'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 10, 'onlylist' => true));
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));
