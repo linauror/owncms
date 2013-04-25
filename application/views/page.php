@@ -24,8 +24,5 @@
 </div>
 <?php $this->load->view('footer');?>
 </div>
-<script type="text/javascript">
-$('.search_right_q').val('<?php echo $q;?>');
-</script>
 </body>
 </html>
