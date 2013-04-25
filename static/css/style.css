@@ -153,25 +153,30 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 .comments_list .comment_reply_link { margin: 16px 0;}
 .comments_list .comment_reply_link a{ font-size: 13px;}
 
-/*评论*/
-#respond {padding-top: 48px;}
-#respond h3{ font-size: 16px; font-weight: bold;}
-#respond form{ margin: 24px 0 48px 0;}
-#respond form .required{ color: red;}
-#respond form p{ margin: 11px 0; line-height: 14px;}
-#respond form p input, #respond form p textarea{ border-radius: 3px; border: 1px solid #ccc; padding: 10px; width: 270px;}
-#respond form p textarea { width: 500px; height: 100px;}
-#respond form p input.comment_submit{ cursor: pointer; width: 100px;}
+/*表单*/
+.form {padding-top: 48px;}
+.form h3{ font-size: 16px; font-weight: bold;}
+.form form{ margin: 24px 0 48px 0;}
+.form form .required{ color: red;}
+.form form p{ margin: 11px 0; line-height: 14px;}
+.form form p input, .form form p textarea{ border-radius: 3px; border: 1px solid #ccc; padding: 10px; width: 270px;}
+.form form p textarea { width: 500px; height: 100px;}
+.form form p input.comment_submit{ cursor: pointer; width: 100px;}
+.form form p input[type="checkbox"] { width: 14px;}
 
 /*作者作品*/
-.left_con .author_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1; display: none;}
+.left_con .author_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1;}
 .left_con .author_info:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
 .left_con .author_info a.avatar{ float: left; margin-right: 40px;}
 
 /*欢迎登录*/
-.right_con .user_info{ border-bottom: 1px solid #ededed; position: relative; padding-bottom: 20px;}
+.right_con .user_info{ border-bottom: 1px solid #ededed; position: relative; padding-bottom: 20px; display: none;}
 .right_con .user_info .avatar{ position: absolute; left: 0; top: 55px;}
 .right_con .user_info p{ padding-left: 70px;}
+
+/*登录*/
+.left_con .login{ padding-top: 28px;}
+.left_con .login #expired{ margin-left: 20px;}
 /*content end
 -------------------------------------------------*/
 
