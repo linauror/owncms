@@ -1,0 +1,185 @@
+﻿@charset "utf-8";
+/* CSS Document */
+
+
+/* RESET start ↓↓↓↓↓↓↓↓↓↓↓↓↓↓ 
+---------------------------------------------------------------------------------------------------------------*/
+body, div, dl, dt, dd, ul, ol, li,
+h1, h2, h3, h4, h5, h6, pre, code,
+form, fieldset, legend, input, button,
+textarea, p, blockquote, th, td 
+{
+    margin: 0;
+    padding: 0;
+}
+fieldset, img {
+    border: 0;
+}
+/* remember to define focus styles! */
+:focus {
+    outline: 0;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-size: 100%;
+    font-weight: normal;
+}
+abbr, acronym {
+    border: 0;
+    font-variant: normal;
+}
+input, button, textarea,
+select, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+code, kbd, samp, tt {
+    font-size: 100%;
+}
+/*@purpose To enable resizing for IE */
+/*@branch For IE6-Win, IE7-Win */
+input, button, textarea, select {
+    *font-size: 100%;
+}
+ol, ul, dl , li, dd {
+    list-style: none;
+}
+/* tables still need 'cellspacing="0"' in the markup */
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+caption, th {
+    text-align: left;
+}
+sup, sub {
+    font-size: 100%;
+    vertical-align: baseline;
+}
+/* remember to highlight anchors and inserts somehow! */
+a:link, a:visited , ins {
+    text-decoration: none;
+}
+blockquote, q {
+    quotes: none;
+}
+
+.clear{ height:1%; overflow:hidden;}
+
+.after {content:".";display:block;height:0;clear:both;visibility:hidden;zoom:1;}
+html,body{ width:100%; height:100%;}
+
+a, a:link{ color:#5e5e5e; text-decoration: underline;}
+a:hover{ color:#21759b;}
+/* RESET end*/
+
+
+
+
+
+/*layout ↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+------------------------------------------------------------------------------------------------------------*/
+
+
+body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6e6; color: #444; padding-bottom: 20px;}
+#wrap{ width:960px; padding: 0 40px; margin:50px auto; box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3); background: #fff;}
+
+
+/*header start
+-----------------------------------------------*/
+#header{ height: 116px; padding: 25px 0;}
+#header a {text-decoration: none;}
+#header h1 a{ font-size: 26px; height: 48px; line-height: 48px; font-weight: bold; color: #515151; background: url(../admin/images/admin_logo.png) no-repeat; text-indent: -9999px; display: block; width: 200px;}
+#header h1 a:hover{ color:#21759b;}
+
+.nav_main{ margin-top: 24px; border: 1px solid #ededed; border-left: none; border-right: none; height: 46px; font-size: 12px;}
+.nav_main li{ float: left; margin-right: 40px; line-height: 46px; position: relative;}
+.nav_main li:hover > ul{ display: block;}
+.nav_main a:hover{ color: #000;}
+.nav_main > li.current {color: #000; font-weight: bold;}
+.nav_main .sub_menu{color: #444; font-weight: normal;}
+.nav_main li ul{ position: absolute; background: #efefef; left: 0; top: 46px; display: none;}
+.nav_main li ul ul { left: 200px; top: 0;}
+.nav_main li ul li {float: none; width: 200px; margin-right: 0;}
+.nav_main li ul li a{ display: block; padding-left: 10px;}
+.nav_main li ul li a:hover{ background: #e3e3e3;}
+/*header end
+------------------------------------------------*/
+
+
+/*content start
+-------------------------------------------------*/
+#content{ background:#fff; padding:5px 0;zoom:1;}
+#content:after {content:".";display:block;height:0;clear:both;visibility:hidden;}
+
+.left_con{ width: 627px; float: left; padding-top: 20px;}
+.right_con{ width: 250px; float: right; font-size: 12px;}
+
+.post_list{ margin-bottom: 50px; padding-bottom: 20px;  border-bottom: 4px double #ededed;}
+.post_list .post_title { margin-bottom: 24px;}
+.post_list .post_title, .post_list .post_title a{ color: #21759B; font-size: 22px; text-decoration: none;}
+.post_list .comments_link{ display: block; font-size: 12px;}
+.post_list .post_content{ overflow: hidden; margin-top: 24px;}
+.post_list .post_content img{ max-width: 600px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); border-radius: 3px;}
+.post_list .post_meta{ height: 66px; line-height: 66px; margin-bottom: 2px; font-size: 13px; color: #757575;}
+.post_list .edit_link{ font-size: 12px; padding-top: 24px; display: block;}
+
+.archive_header { line-height: 50px; font-weight: bold; border-bottom: 1px solid #ededed; font-size: 12px; margin-bottom: 50px;}
+
+.right_con h3{ font-weight: bold; height: 50px; color: #636363;}
+.search_right { height: 84px;}
+.search_right .search_right_q{ width: 136px; height: 20px; border-radius: 3px; border: 1px solid #ccc; padding: 6px;}
+.search_right .search_right_submit{ background: #ebebeb; color: #5e5e5e; cursor: pointer; border-radius: 3px; box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1); border: 1px solid #d2d2d2; width: 46px; height: 31px; font-size: 12px;}
+
+.right_con .widget { margin-bottom: 40px;}
+
+/*上下篇*/
+.post_near{zoom:1;}
+.post_near:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.post_near a{ color: #21759B;}
+.post_near .prev_link { float: left; width: 50%; overflow: hidden;}
+.post_near .next_link { float: right; width: 50%; text-align: right; overflow: hidden;}
+
+/*评论列表*/
+.comments_list_title{ margin: 48px 0;}
+.comments_list .comment_wrap{ border-bottom: 4px double #ededed; margin-bottom: 24px; padding-bottom: 18px;}
+.comments_list ol ol { margin-left: 48px;}
+.comments_list .comment_meta{ height: 44px; margin-bottom: 48px; position: relative; padding-left: 85px;}
+.comments_list .comment_meta .avatar{ position: absolute; left: 0; top: 0;}
+.comments_list .comment_meta .username, .comments_list .comment_meta .username a{ font-size: 15px; line-height: 21px; text-decoration: none;}
+.comments_list .comment_meta .username span{ border: 1px solid #1f6f93; border-radius: 2px; background: #21759b; padding: 2px;}
+.comments_list .comment_meta .username span a{ color: #fff; font-size: 12px;}
+.comments_list .comment_reply_link { margin: 16px 0;}
+.comments_list .comment_reply_link a{ font-size: 13px;}
+
+/*评论*/
+#respond {padding-top: 48px;}
+#respond h3{ font-size: 16px; font-weight: bold;}
+#respond form{ margin: 24px 0 48px 0;}
+#respond form .required{ color: red;}
+#respond form p{ margin: 11px 0; line-height: 14px;}
+#respond form p input, #respond form p textarea{ border-radius: 3px; border: 1px solid #ccc; padding: 10px; width: 270px;}
+#respond form p textarea { width: 500px; height: 100px;}
+#respond form p input.comment_submit{ cursor: pointer; width: 100px;}
+
+/*作者作品*/
+.left_con .author_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1;}
+.left_con .author_info:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.left_con .author_info a.avatar{ float: left; margin-right: 40px;}
+
+/*欢迎登录*/
+.right_con .user_info{ border-bottom: 1px solid #ededed; position: relative; padding-bottom: 20px;}
+.right_con .user_info .avatar{ position: absolute; left: 0; top: 55px;}
+.right_con .user_info p{ padding-left: 70px;}
+/*content end
+-------------------------------------------------*/
+
+
+/*footer start
+-------------------------------------------------*/
+#footer{ padding:24px 0; font-size: 12px; border-top: 1px solid #EDEDED;}
+
+/*footer end
+-------------------------------------------------*/
+
