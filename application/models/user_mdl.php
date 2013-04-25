@@ -268,8 +268,8 @@ class User_mdl extends CI_Model
     {
         $this->load->library('encrypt');
         $expired = $expired ? $expired : $this->config->item('userlogin_expired');
-        $user = $this->db->get_where(self::TABLE, array('username' => $username, 'password' => md5($password. $this->encryption_key)))->row_array();
-
+        $is_email = strpos($username, '@') != false ? true : false;
+        $user = $this->db->get_where(self::TABLE, array(($is_email ? 'usermail' : 'username') => $username, 'password' => md5($password. $this->encryption_key)))->row_array();
         if (count($user)) {
             if ($user['status'] == 0) {
                 return array('errorcode' => -1); // 用户被禁止
@@ -279,7 +279,7 @@ class User_mdl extends CI_Model
             $this->db->update(self::TABLE, array('logintime' => date('Y-m-d H:i:s'), 'loginip' => $this->input->ip_address(), 'logedtime' => $user['logintime'], 'logedip' => $user['loginip'], 'logincount' => $user['logincount'] + 1), array('uid' => $user['uid']));
             return array('errorcode' => 0, 'user' => $user);  //登录成功
         } else {
-            if ($this->checkuser('username', $username)) {
+            if ($this->checkuser(($is_email ? 'usermail' : 'username'), $username)) {
                 return array('errorcode' => -2); //密码错误
             } 
             return array('errorcode' => -3); //用户名不存在
