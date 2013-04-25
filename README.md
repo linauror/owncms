@@ -14,6 +14,6 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久
 
 * 解压程序文件到网站根目录
 
-* 导入owncms.sql，修改application/config/database.php中的数据库地址、账号、密码、数据库名信息。
+* 导入`owncms.sql`，修改`application/config/database.php`中的数据库地址、账号、密码、数据库名信息。
 
-* 默认重写的url，如服务器不支持URL重写，可修改application/config/config.php中$config['index_page']的值改为index.php，并删除根目录下.htaccess。
+* 默认重写的url，如服务器不支持URL重写，可修改`application/config/config.php中$config['index_page']`的值改为`index.php`，并删除根目录下`.htaccess`。
