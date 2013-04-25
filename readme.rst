@@ -4,6 +4,7 @@
 
 OWNCMS基于CI的PHP开源框架。
 目前适用于小型博客，内容型站点等。
+*[官网及示例](http://owncms.linauror.com)
 
 #安装步骤
 *解压程序文件至网站根目录下
