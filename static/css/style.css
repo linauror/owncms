@@ -177,6 +177,13 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 /*登录*/
 .left_con .login{ padding-top: 28px;}
 .left_con .login #expired{ margin-left: 20px;}
+
+/*个人主页*/
+.left_con .user_info{ line-height: 25px; padding-bottom: 30px; font-weight: normal; font-size: 14px; zoom:1;}
+.left_con .user_info:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+.left_con .user_info .avatar{ float: left; margin-right: 40px;}
+.left_con .user_info .avatar a{ font-size: 12px;}
+.left_con .user_info .other{ float: left;}
 /*content end
 -------------------------------------------------*/
 
