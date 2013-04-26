@@ -4,7 +4,7 @@ $(function(){
             html = '';
             data = eval('(' + data + ')');
             html += '<h3>欢迎登录</h3>' +
-                    '<img src="'+data.avatar+'?s=44" class="avatar" title="'+data.username+'" />' +
+                    '<a href="'+base_url+'profile"><img src="'+data.avatar+'?s=44" class="avatar" title="'+data.username+'" /></a>' +
                     '<p><strong>'+data.username+'</strong></p>' + 
                     '<p><a href="'+base_url+'author/'+data.username+'.html" title="我的作品">我的作品</a>&nbsp;&nbsp;&nbsp;' + 
                     (data.userurl ? '<a href="'+data.userurl+'" target="_blank">我的网站</a></p>' : '</p>') + 
