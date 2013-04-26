@@ -24,7 +24,7 @@ class Post extends CI_Controller
      */
     public function index()
     {
-        $http_query = $this->input->get();        
+        $http_query = $this->input->get();   
         $post = $this->Post_mdl->get_list($http_query);
     
         //分页
@@ -140,7 +140,6 @@ class Post extends CI_Controller
      */
     public function del($id)
     {
-        $this->User_mdl->checkpurview();
         $post = $this->Post_mdl->del($id);
         if ($post) {
             $this->User_mdl->userlog_add('【文章】删除文章：' . $post['title']);
@@ -158,7 +157,6 @@ class Post extends CI_Controller
      */
     public function alldel()
     {
-        $this->User_mdl->checkpurview();
         $post = $this->input->post('id');
         if ($post) {
             $post = $this->Post_mdl->del($post);
