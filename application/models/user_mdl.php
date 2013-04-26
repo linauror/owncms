@@ -128,8 +128,8 @@ class User_mdl extends CI_Model
         
         $this->load->library('encrypt');
         $post['password'] = md5($post['password']. $this->encryption_key);
-        $post['regip'] = $this->input->ip_address();
-        $post['regtime'] = date('Y-m-d H:i:s');
+        $post['regip'] = $post['loginip'] = $this->input->ip_address();
+        $post['regtime'] = $post['logintime'] = date('Y-m-d H:i:s');
               
         $this->db->insert(self::TABLE, $post);
         return $this->db->insert_id();
@@ -174,14 +174,15 @@ class User_mdl extends CI_Model
         if (strlen($post['username']) < 4 && strlen($post['username']) > 20) return -1; //用户名长度不符
         if (!preg_match('/^[\w]+$/', $post['username'])) return -2; //用户名格式不正确
         if (!preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail'])) return -3; //邮箱格式不正确
+        if (isset($post['password']) && strlen($post['password']) < 6 || strlen($post['username']) > 20) return -4; //密码长度不符
         
         $this->db->where_not_in('uid', $id);
         $this->db->where('username', $post['username']);
-        if ($this->db->get(self::TABLE)->num_rows) return -4; //用户名已经存在
+        if ($this->db->get(self::TABLE)->num_rows) return -5; //用户名已经存在
         
         $this->db->where_not_in('uid', $id);
         $this->db->where('usermail', $post['usermail']);
-        if ($this->db->get(self::TABLE)->num_rows) return -5; //用户邮箱已经存在
+        if ($this->db->get(self::TABLE)->num_rows) return -6; //用户邮箱已经存在
         
         if (isset($post['password'])) $post['password'] = md5($post['password']. $this->encryption_key);
         
