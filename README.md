@@ -10,10 +10,13 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久
 
 ![程序截图](http://www.linauror.com/wp-content/uploads/2013/04/20130424111232-1024x655.jpg)
 
-##安装步骤：
+##安装
 
 * 解压程序文件到网站根目录
 
-* 导入`owncms.sql`，修改`application/config/database.php`中的数据库地址、账号、密码、数据库名信息。
+* 导入`owncms.sql`，修改`application/config/database.php`中的数据库地址、账号、密码、数据库名信息
 
-* 默认重写的url，如服务器不支持URL重写，可修改`application/config/config.php中$config['index_page']`的值改为`index.php`，并删除根目录下`.htaccess`。
+* 默认重写的url，如服务器不支持URL重写，可修改`application/config/config.php中$config['index_page']`的值改为`index.php`，并删除根目录下`.htaccess`
+
+##使用
+* 后台默认账号密码：`admin`，`admin`，拥有最高权限
