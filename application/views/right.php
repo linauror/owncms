@@ -30,7 +30,7 @@
     <div class="widget">
     <h3>功能</h3>
         <ul>
-            <li class="login"><a href="<?php echo site_url('login');?>" title="登录后台">登录</a></li>
+            <li class="login"><a href="<?php echo site_url('login');?>" title="登录后台">登录</a>&nbsp;&nbsp;&nbsp;<a href="<?php echo site_url('login/register');?>" title="没有账号？请注册">注册</a></li>
         </ul>
     </div>
 </div>
