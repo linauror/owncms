@@ -92,11 +92,11 @@ if (!function_exists('show_menu_nav'))
 if (!function_exists('show_comments_list'))
 {
     /**
-     * show_menu_nav()
-     * 输出菜单
+     * show_comments_list()
+     * 输出评论列表
      * @param mixed $array
      * @param integer $reid
-     * @param string $class
+     * @param mixed $post_uid
      * @return
      */
     function show_comments_list($array, $reid = 0, $post_uid)
@@ -109,8 +109,8 @@ if (!function_exists('show_comments_list'))
                 $html .= '<p class="username">'.($line['reid'] == 0 ? '<strong>'.$i.'楼</strong> ' : '').( $line['userurl'] ? '<a href="'.$line['userurl'].'" target="_blank"> '.$line['username'].' </a>' : $line['username']).($line['uid'] == $post_uid ? ' <span><a href="'.site_url('author/'.$line['username']).'" title ="点击查看作者所有作品">文章作者</a></span>' : '').'</p>';
                 $html .= '<p class="posttime">'.$line['posttime'].'</p></div>';
                 $html .= '<div class="comment_content">'.$line['content'].'</div>';
-                $html .= '<div class="comment_reply_link"><a href="#respond" onclick="go_reply('.$line['id'].');">回复</a>↓</div></div>';
                 $html .= show_comments_list($array, $line['id'], $post_uid);
+                $html .= $line['reid'] == 0 ? '<div class="comment_reply_link"><a href="#respond" onclick="go_reply('.$line['id'].');">回复</a>↓</div></div>' : '';
                 $html .= '</li>';
             }
             $i++;

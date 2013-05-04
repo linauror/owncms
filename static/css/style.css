@@ -147,15 +147,15 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 
 /*评论列表*/
 .comments_list_title{ margin: 48px 0;}
-.comments_list .comment_wrap{ border-bottom: 4px double #ededed; margin-bottom: 24px; padding-bottom: 18px;}
+.comments_list .comment_content{ border-bottom: 4px double #ededed; margin-bottom: 24px; padding-bottom: 18px;}
 .comments_list ol ol { margin-left: 48px;}
 .comments_list .comment_meta{ height: 44px; margin-bottom: 48px; position: relative; padding-left: 85px;}
 .comments_list .comment_meta .avatar{ position: absolute; left: 0; top: 0;}
 .comments_list .comment_meta .username, .comments_list .comment_meta .username a{ font-size: 15px; line-height: 21px; text-decoration: none;}
 .comments_list .comment_meta .username span{ border: 1px solid #1f6f93; border-radius: 2px; background: #21759b; padding: 2px;}
 .comments_list .comment_meta .username span a{ color: #fff; font-size: 12px;}
-.comments_list .comment_reply_link { margin: 16px 0;}
-.comments_list .comment_reply_link a{ font-size: 13px;}
+.comments_list .comment_reply_link { margin-bottom: 20px; margin-top: -52px; text-align: right;}
+.comments_list .comment_reply_link a{ font-size: 13px; color: #21759B;}
 
 /*表单*/
 .form {padding-top: 48px;}
