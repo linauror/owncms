@@ -121,8 +121,9 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 .post_list .post_title, .post_list .post_title a{ color: #21759B; font-size: 22px; text-decoration: none;}
 .post_list .comments_link{ display: block; font-size: 12px;}
 .post_list .post_content{ overflow: hidden; margin-top: 24px;}
-.post_list .post_content img{ max-width: 600px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); border-radius: 3px;}
-.post_list .post_meta{ height: 66px; line-height: 66px; margin-bottom: 2px; font-size: 13px; color: #757575;}
+.post_list .post_content img{ max-width: 600px; box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2); border-radius: 3px; cursor: pointer;}
+.post_list .post_content p{ margin-bottom: 20px;}
+.post_list .post_meta{line-height: 66px; margin-bottom: 2px; font-size: 13px; color: #757575;}
 .post_list .edit_link{ font-size: 12px; padding-top: 24px; display: block;}
 
 .archive_header { line-height: 50px; font-weight: bold; border-bottom: 1px solid #ededed; font-size: 12px; margin-bottom: 50px;}
@@ -133,6 +134,9 @@ body{ font:14px/25px "Open Sans", Helvetica, Arial, sans-serif; background:#e6e6
 .search_right .search_right_submit{ background: #ebebeb; color: #5e5e5e; cursor: pointer; border-radius: 3px; box-shadow: 0 1px 2px rgba(64, 64, 64, 0.1); border: 1px solid #d2d2d2; width: 46px; height: 31px; font-size: 12px;}
 
 .right_con .widget { margin-bottom: 40px;}
+
+/*大图预览*/
+.preview_img{ position: absolute; box-shadow: 0 1px 4px #333; border-radius: 3px; cursor: pointer; left: 50%; top: 50%; display: none; z-index: 100;}
 
 /*上下篇*/
 .post_near{zoom:1;}
