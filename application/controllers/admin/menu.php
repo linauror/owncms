@@ -65,7 +65,7 @@ class Menu extends CI_Controller
             $return = $this->Menu_mdl->update($post, $id);
             if ($return !== false) {
                 if ($return) {
-                    $this->User_mdl->userlog_add('【菜单】更新菜单：' . $post['typename'].'['.$post['slug'].']');
+                    $this->User_mdl->userlog_add('【菜单】更新菜单：' . $post['nav'].'['.$post['url'].']');
                     admintip('成功更新菜单！');                     
                 }
                 admintip('没有做任何更改！'); 
