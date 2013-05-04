@@ -3,7 +3,7 @@ Powered By <a href="http://owncms.linauror.com" target="_blank">OWNCMS</a> Desig
 <p>查询：<?php echo $this->db->query_count;?>次 &nbsp;&nbsp;用时：{elapsed_time}秒 &nbsp;&nbsp;占用内存{memory_usage} 
 <script type="text/javascript" src="<?php echo base_url();?>static/js/owncms.js"></script>
 <script type="text/javascript">
-var base_url = '<?php echo base_url();?>';
+var base_url = '<?php echo base_url().(index_page() != '' ? index_page().'/' : '' );?>';
 var current_url = '<?php echo current_url();?>';
 var uid = <?php echo $this->User_mdl->uid;?>;
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
