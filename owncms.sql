@@ -143,7 +143,7 @@ CREATE TABLE `post` (
   `description` varchar(600) NOT NULL COMMENT '描述',
   `source` varchar(50) NOT NULL COMMENT '文章来源',
   `click` int(10) unsigned NOT NULL COMMENT '点击次数',
-  `comment_count` int(10) unsigned NOT NULL COMMENT '评论次数',
+  `comment_count` int(10) unsigned NOT NULL DEFAULT '0' COMMENT '评论次数',
   `comment_status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '是否允许评论',
   `uid` int(10) unsigned NOT NULL COMMENT '作者ID',
   `sortrank` int(10) unsigned NOT NULL COMMENT '排序 倒序',
