@@ -11,7 +11,7 @@
 <body>
 <div id="container">  
   <div id="header">
-    <h1><a href="<?php echo site_url('admin');?>"><img src="<?php echo base_url();?>static/admin/images/admin_logo.png"  alt="OWNCMS 精简版" title="OWNCMS 精简版" /></a></h1>
+    <h1><a href="<?php echo site_url('admin');?>"><img src="<?php echo base_url();?>static/admin/images/admin_logo.png"  alt="OWNCMS" title="OWNCMS" /></a></h1>
     <div class="welcome">欢迎你，<strong><?php echo $this->User_mdl->username;?></strong> <a href="<?php echo site_url();?>" target="_blank">前台首页</a> <a href="<?php echo site_url('admin/login/loginout');?>">注销登录</a> <a href="<?php echo site_url('admin/index/clean_cache')?>">清空缓存</a></div>
     <form action="<?php echo site_url('admin/post');?>" method="get" class="top_search">
       <input type="text" name="title" placeholder="请输入关键字 -.-" />
@@ -19,9 +19,10 @@
     </form>
     <div class="aboutowncms">
       <div class="aboutowncms_text">
-        <p>Powered by <a href="javascript:;">OWNCMS</a></p>
-        <p>版本：Ver 1.0</p>
-        <p>开发者：Auror（514168424）</p>
+		<p></p>
+        <p>Powered by <a href="http://owncms.linauror.com" target="_blank">OWNCMS</a></p>
+        <p>开发者：傲罗（514168424）</p>
+		<p></p>
       </div>
     </div>
     <ul>
