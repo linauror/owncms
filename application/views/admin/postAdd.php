@@ -22,7 +22,7 @@ $(function(){
             <tr>
               <td class="table_right"> 缩略标题：</td>
               <td><input type="text" name="slug" value="" title="缩略标题" />
-                <span>缩略标题不得重复</span></td>
+                <span>缩略标题有利于搜索的友好URL，字母与-组合</span></td>
             </tr>
             <tr>
               <td class="table_right"> 所属栏目 ：</td>

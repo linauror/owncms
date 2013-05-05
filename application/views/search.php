@@ -17,12 +17,12 @@
     <h1 class="archive_header"><?php echo $q;?> 的搜索结果</h1>
     <?php foreach ($post_list as $line) {?>
         <div class="post_list">
-            <h1 class="post_title"><a href="<?php echo site_url($line['channeltype'].'/'.$line['slug']);?>" title="<?php echo $line['title'];?>"><?php echo $line['title'];?></a></h1>
+            <h1 class="post_title"><a href="<?php echo site_url($line['channeltype'].'/'.$line['id'].'/'.$line['slug']);?>" title="<?php echo $line['title'];?>"><?php echo $line['title'];?></a></h1>
             <?php if ($line['comment_status']) { 
-                echo $line['comment_count'] ? '<a class="comments_link" href="'.site_url($line['channeltype'].'/'.$line['slug']).'#comments_list" title="《'.$line['title'].'》上的评论">'.$line['comment_count'].'条评论</a>' : '<a class="comments_link" href="'.site_url(get_from_array($categorys, 'id', $line['category'], 'channeltype').'/'.$line['slug']).'#respond" title="《'.$line['title'].'》上的评论">发表评论</a>'; 
+                echo $line['comment_count'] ? '<a class="comments_link" href="'.site_url($line['channeltype'].'/'.$line['id'].'/'.$line['slug']).'#comments_list" title="《'.$line['title'].'》上的评论">'.$line['comment_count'].'条评论</a>' : '<a class="comments_link" href="'.site_url(get_from_array($categorys, 'id', $line['category'], 'channeltype').'/'.$line['slug']).'#respond" title="《'.$line['title'].'》上的评论">发表评论</a>'; 
             }?>
             <div class="post_content"><?php echo $line['content'];?></div>
-            <div class="post_meta">本文章发布于 <a href="<?php echo site_url($line['channeltype'].'/'.$line['slug']);?>"><?php echo $line['posttime']?></a>。
+            <div class="post_meta">本文章发布于 <a href="<?php echo site_url($line['channeltype'].'/'.$line['id'].'/'.$line['slug']);?>"><?php echo $line['posttime']?></a>。
             属于 <?php echo getParCategory($categorys, $line['category'], '<a category_id="%u" href="'.site_url('category/%s').'">%s</a>', ' 、 ');?> 分类。
             <?php echo $line['uid'] == $this->User_mdl->uid ? '<a href="'.site_url('admin/post/edit/'.$line['id']).'">编辑</a>' : ''?>
             </div>

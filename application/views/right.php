@@ -7,7 +7,7 @@
     <h3>热门文章</h3>
         <ul>
         <?php foreach ($post_hot['list'] as $line) {?>
-            <li><a href="<?php echo site_url($line['channeltype'].'/'.$line['slug']);?>" title="<?php echo $line['title'];?>"><?php echo $line['title'];?></a> <?php echo $line['click'];?>℃</li>
+            <li><a href="<?php echo site_url($line['channeltype'].'/'.$line['id'].'/'.$line['slug']);?>" title="<?php echo $line['title'];?>"><?php echo $line['title'];?></a> <?php echo $line['click'];?>℃</li>
         <?php } ?>
         </ul>
     </div>
@@ -15,7 +15,7 @@
     <h3>最新评论</h3>
         <ul>
         <?php foreach ($comments_new['list'] as $line) {?>
-            <li><a href="<?php echo site_url($line['channeltype'].'/'.$line['slug']);?>#comments_id_<?php echo $line['id'];?>" title="评论给《<?php echo $line['title'];?>》"><?php echo $line['content'];?></a></li>
+            <li><a href="<?php echo site_url($line['channeltype'].'/'.$line['pid'].'/'.$line['slug']);?>#comments_id_<?php echo $line['id'];?>" title="评论给《<?php echo $line['title'];?>》"><?php echo $line['content'];?></a></li>
         <?php } ?>
         </ul>
     </div>

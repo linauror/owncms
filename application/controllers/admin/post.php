@@ -112,7 +112,6 @@ class Post extends CI_Controller
             $id = $post['id'];
             unset($post['id']);
             $return = $this->Post_mdl->update($post, $id);
-            echo $return;
             if ($return !== false) {
                 if ($return) {
                     $this->User_mdl->userlog_add('【文章】更新文章：' . $post['title']);
@@ -120,13 +119,13 @@ class Post extends CI_Controller
                 }
                 admintip('没有做任何更改！'); 
             }
-            admintip('error:更新失败，请检查缩略标题是否重复！');              
+            admintip('error:更新失败！');              
         } else {
             if ($this->Post_mdl->add($post)) {
                 $this->User_mdl->userlog_add('【文章】新增文章：' . $post['title']);
                 admintip('成功新增文章！');     
             }
-            admintip('error:添加失败，请检查缩略标题是否重复！');        
+            admintip('error:添加失败！');        
         }
     }
 
@@ -179,7 +178,7 @@ class Post extends CI_Controller
     {
         $post = $this->Post_mdl->get('category, slug', $id);
         $channeltype = $this->Category_mdl->get('channeltype', $post['category']);
-        redirect($channeltype.'/'.$post['slug']);
+        redirect($channeltype.'/'.$id.'/'.$post['slug']);
     }
 }
 

@@ -95,7 +95,7 @@ class Comment_mdl extends CI_Model
         }
         
         //输出列表
-        $this->db->select(add_table_prefix(self::TABLE, $select).','.add_table_prefix(self::TABLE_POST, 'title,slug,category').','.self::TABLE_CATEFORY.'.channeltype');
+        $this->db->select(add_table_prefix(self::TABLE, $select).','.add_table_prefix(self::TABLE_POST, 'id AS pid,title,slug,category').','.self::TABLE_CATEFORY.'.channeltype');
         $this->db->from(self::TABLE);
         $this->db->join(self::TABLE_POST, self::TABLE.'.pid = '.self::TABLE_POST.'.id', 'left');
         $this->db->join(self::TABLE_USER, self::TABLE.'.uid = '.self::TABLE_USER.'.uid', 'left');

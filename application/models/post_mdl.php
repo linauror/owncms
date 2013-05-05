@@ -31,7 +31,6 @@ class Post_mdl extends CI_Model
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Category_mdl');
     }
 
     // ------------------------------------------------------------------------
@@ -43,7 +42,7 @@ class Post_mdl extends CI_Model
      * @return
      */
     public function get_list($array = array()) 
-    {
+    {   
         $array = $array && count($array) ? array_diff($array, array('')) : array();
         
         //flag
@@ -64,6 +63,7 @@ class Post_mdl extends CI_Model
         
         //category
         if (isset($array['category'])) {
+            $this->load->model('Category_mdl');
             if (is_numeric($array['category'])) {
                 $cateid = $this->Category_mdl->get('id', $array['category'], 'id');
             } else {
@@ -137,18 +137,12 @@ class Post_mdl extends CI_Model
     public function add($post) 
     {
         $post = array_diff($post, array(''));
-        if (!$this->get('id', $post['slug'], 'slug')) {
-            $maxidArray = $this->db->query('SELECT t.`AUTO_INCREMENT` as maxid FROM information_schema.`TABLES` t WHERE t.`TABLE_NAME`=\''.self::TABLE.'\'')->row_array();
-            $maxid = $maxidArray ? $maxidArray['maxid'] : 1;
-            
-            $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
-            $post['slug'] = $post['slug'] ? $post['slug'] : $maxid;
-            $post['uid'] = $this->User_mdl->uid;
-            $post['tag'] = $this->_add_tag($post['tag']);
-            
-            $this->db->insert(self::TABLE, $post);
+        $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
+        $post['uid'] = $this->User_mdl->uid;
+        $post['tag'] = $this->_add_tag($post['tag']);
+        if ($this->db->insert(self::TABLE, $post)) {
             return $this->db->insert_id();
-        } 
+        }
         return false;
     }
 
@@ -187,15 +181,11 @@ class Post_mdl extends CI_Model
      */
     public function update($post, $id) 
     {
-        $this->db->where_not_in('id', $id);
-        $this->db->where('slug', $post['slug']);
-        $check = $this->db->get(self::TABLE)->num_rows();
-        if (!$check) {
-            clear_this_cache($post['slug']);
-            $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
-            $post['modifytime'] = date('Y-m-d H:i:s');
-            $post['tag'] = $this->_add_tag($post['tag']);
-            $this->db->update(self::TABLE, $post, array('id' => $id));
+        clear_this_cache($id);
+        $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
+        $post['modifytime'] = date('Y-m-d H:i:s');
+        $post['tag'] = $this->_add_tag($post['tag']);
+        if ($this->db->update(self::TABLE, $post, array('id' => $id))) {
             return $this->db->affected_rows();
         }
         return false; 
@@ -215,7 +205,7 @@ class Post_mdl extends CI_Model
             $this->db->where_in('id', $id);
             $posts = $this->db->select('slug,category')->get(self::TABLE)->result_array();
             foreach ($posts as $line) {
-                clear_this_cache($line['slug']); //删除缓存
+                clear_this_cache($id); //删除缓存
             }
             $this->db->where_in('pid', $id)->delete(self::TABLE_COMMENT); //删除文章评论
             $this->db->where_in('id', $id);
@@ -223,7 +213,7 @@ class Post_mdl extends CI_Model
             return $this->db->affected_rows();
         }
         $data = $this->get('title,slug', $id);
-        clear_this_cache($data['slug']); //删除缓存
+        clear_this_cache($id); //删除缓存
         $this->db->delete(self::TABLE_COMMENT, array('pid' => $id)); //删除文章评论
         $this->db->delete(self::TABLE, array('id' => $id));
         return $data;

@@ -15,9 +15,9 @@ class Post extends CI_Controller
     /**
      * 首页
      */
-    public function index($slug)
+    public function index($id)
     {
-        $post = $this->Post_mdl->get('*', $slug, 'slug', array('ishidden' => 0));
+        $post = $this->Post_mdl->get('*', $id, 'id', array('ishidden' => 0));
         if (!$post) show_error('此页面不存在');
         
         $this->load->model('Friendlink_mdl');
@@ -34,7 +34,7 @@ class Post extends CI_Controller
         $html['thetag'] = $thetag;
         $html['comments_list'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 1000, 'pid' => $post['id'], 'orderby' => 'id ASC', 'onlylist' => true));
         $html['near_post'] = $this->Post_mdl->get_near_post($post['id'], 'slug,category,title');
-        $html['post_hot'] = $this->Post_mdl->get_list(array('select' => 'category,title,slug,click,posttime', 'ishidden' => 0, 'limit' => 10, 'posttime' => true, 'orderby' => 'click DESC', 'onlylist' => true));
+        $html['post_hot'] = $this->Post_mdl->get_list(array('select' => 'id,category,title,slug,click,posttime', 'ishidden' => 0, 'limit' => 10, 'posttime' => true, 'orderby' => 'click DESC', 'onlylist' => true));
         $html['comments_new'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 10, 'onlylist' => true));
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));
         $this->load->view($post['template'], $html);
