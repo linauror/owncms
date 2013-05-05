@@ -132,7 +132,7 @@ INSERT INTO page (`id`, `title`, `slug`, `content`, `posttime`, `modifytime`, `u
 DROP TABLE IF EXISTS post;
 
 CREATE TABLE `post` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `category` tinyint(4) unsigned NOT NULL COMMENT '类别ID',
   `flag` varchar(50) NOT NULL COMMENT '属性',
   `litpic` varchar(100) NOT NULL COMMENT '略缩图',
@@ -152,9 +152,7 @@ CREATE TABLE `post` (
   `template` varchar(50) NOT NULL COMMENT '模板名称',
   `tag` varchar(100) NOT NULL COMMENT '标签ID集合',
   `ishidden` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否隐藏',
-  PRIMARY KEY (`slug`,`uid`),
-  UNIQUE KEY `slug` (`slug`),
-  KEY `id` (`id`)
+  PRIMARY KEY (`uid`, `id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='文章列表';
 
 #
