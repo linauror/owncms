@@ -18,14 +18,14 @@
             <h1 class="post_title"><?php echo $post['title'];?></h1>
             <?php if ($post['comment_status']) {?><a class="comments_link" href="#respond" title="发表评论">发表评论</a><?php }?>
             <div class="post_content"><?php echo $post['content'];?></div>
-            <div class="post_meta">本文章发布于 <a href="<?php echo site_url(get_from_array($categorys, 'id', $post['category'], 'channeltype').'/'.$post['slug']);?>"><?php echo $post['posttime']?></a>。
+            <div class="post_meta">本文章发布于 <a href="<?php echo site_url(get_from_array($categorys, 'id', $post['category'], 'channeltype').'/'.$post['id'].'/'.$post['slug']);?>"><?php echo $post['posttime']?></a>。
             属于 <?php echo getParCategory($categorys, $post['category'], '<a category_id="%u" href="'.site_url('category/%s').'">%s</a>', ' 、 ');?> 分类。
             <?php echo $post['tag'] ? '被贴了'.showtag($post['tag'], $thetag, '<a href="'.site_url('tag/%s').'">%s</a>', ' 、 ').'标签' : '';?>。
             <?php echo $post['uid'] == $this->User_mdl->uid ? '<a href="'.site_url('admin/post/edit/'.$post['id']).'">编辑</a>' : ''?></div>
         </div>
         <div class="post_near">
-        <?php echo $near_post['prev'] ? '<a href="'.site_url(get_from_array($categorys, 'id', $near_post['prev']['category'], 'channeltype').'/'.$near_post['prev']['slug']).'" class="prev_link" title = "上一篇《'.$near_post['prev']['title'].'》"> ← '.$near_post['prev']['title'].'</a>': '';?>
-        <?php echo $near_post['next'] ? '<a href="'.site_url(get_from_array($categorys, 'id', $near_post['next']['category'], 'channeltype').'/'.$near_post['next']['slug']).'" class="next_link" title = "下一篇《'.$near_post['next']['title'].'》">'.$near_post['next']['title'].' → </a>': '';?>
+        <?php echo $near_post['prev'] ? '<a href="'.site_url(get_from_array($categorys, 'id', $near_post['prev']['category'], 'channeltype').'/'.$near_post['prev']['id'].'/'.$near_post['prev']['slug']).'" class="prev_link" title = "上一篇《'.$near_post['prev']['title'].'》"> ← '.$near_post['prev']['title'].'</a>': '';?>
+        <?php echo $near_post['next'] ? '<a href="'.site_url(get_from_array($categorys, 'id', $near_post['next']['category'], 'channeltype').'/'.$near_post['next']['id'].'/'.$near_post['next']['slug']).'" class="next_link" title = "下一篇《'.$near_post['next']['title'].'》">'.$near_post['next']['title'].' → </a>': '';?>
         </div>
         <?php if ($post['comment_count']) {?>
         <div class="comments_list" id="comments_list">
