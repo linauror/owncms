@@ -51,8 +51,8 @@ if (!function_exists('clear_this_cache'))
         if ($type == 'post') {
             $CI->load->model('Post_mdl');
             $CI->load->model('Category_mdl');
-            $post_category = $CI->Post_mdl->get('category', $slug);
-            $uri_string = $CI->Category_mdl->get('channeltype', $post_category).'/'.$slug;
+            $post = $CI->Post_mdl->get('category,slug', $slug);
+            $uri_string = $CI->Category_mdl->get('channeltype', $post['category']).'/'.$slug.($post['slug'] ? '/'.$post['slug'] : '');
         } elseif ($type == 'page') {
             $CI->load->model('Page_mdl');
             $uri_string = 'page/'.(is_numeric($slug) ? $CI->Page_mdl->get('slug', $slug) : $slug);
