@@ -172,8 +172,9 @@ CREATE TABLE `siteconfig` (
 ) ENGINE=MyISAM AUTO_INCREMENT=24 DEFAULT CHARSET=utf8 COMMENT='网站信息表';
 
 INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (1, 'sitename', '网站名称', 'OWNCMS', 'text');
-INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (2, 'keyword', '网站关键词', 'OWNCMS，基于CI的内容管理程序', 'text');
-INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (3, 'description', '网站描述', 'OWNCMS，基于CI的内容管理程序', 'textarea');
+INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (2, 'short_sitename', '网站缩略名称', 'OWNCMS', 'text');
+INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (3, 'keyword', '网站关键词', 'OWNCMS，基于CI的内容管理程序', 'text');
+INSERT INTO siteconfig (`id`, `varname`, `description`, `value`, `inputtype`) VALUES (4, 'description', '网站描述', 'OWNCMS，基于CI的内容管理程序', 'textarea');
 
 
 #
