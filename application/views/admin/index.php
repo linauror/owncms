@@ -15,11 +15,11 @@
     <table class="table">
       <thead>
         <tr>
-          <th colspan="4">其他操作</th>
+          <th colspan="10">其他操作</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td><a href="<?php echo site_url('admin/user/userlog?type=1');?>">用户日志</a></td><td><a href="<?php echo site_url('admin/db');?>">数据库备份/还原</a></td><td><a href="<?php echo site_url('admin/watermark');?>">图片水印设置</a></td><td><a href="<?php echo site_url('admin/online_edit');?>">文件在线编辑</a></td> </tr>
+        <tr><td><a href="<?php echo site_url('admin/user/userlog?type=1');?>">用户日志</a></td><td><a href="<?php echo site_url('admin/db');?>">数据库备份/还原</a></td><td><a href="<?php echo site_url('admin/watermark');?>">图片水印设置</a></td><td><a href="<?php echo site_url('admin/email');?>">邮件设置</a></td><td><a href="<?php echo site_url('admin/online_edit');?>">文件在线编辑</a></td> </tr>
       </tbody>
     </table>    
   </div>
