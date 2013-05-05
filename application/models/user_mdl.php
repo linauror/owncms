@@ -132,6 +132,17 @@ class User_mdl extends CI_Model
         $post['regtime'] = $post['logintime'] = date('Y-m-d H:i:s');
               
         $this->db->insert(self::TABLE, $post);
+        
+        //发送注册邮件
+        include ('application/config/email.php');
+        $config['mailtype'] = 'html';
+        $this->load->library('email', $config);
+        $this->email->from($config['smtp_user'], $config['smtp_user']);
+        $this->email->to($post['usermail']);
+        $this->email->subject('欢迎加入：'.$this->Siteconfig_mdl->get('value', 'short_sitename'));
+        $this->email->message('<p>'.$post['username'].'，你好</p><p>欢迎加入：'.$this->Siteconfig_mdl->get('value', 'short_sitename').'</p><p>此邮箱将作为取回密码的重要依据。请妥善保管。</p>');        
+        $this->email->send();
+        
         return $this->db->insert_id();
     }
     
