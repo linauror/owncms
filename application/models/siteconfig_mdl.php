@@ -126,7 +126,7 @@ class Siteconfig_mdl extends CI_Model
      */
     public function del($id) 
     {
-        if ($id < 4) {
+        if ($id < 5) {
             return false;
         }
         $data = $this->get('varname', $id, 'id');
