@@ -52,10 +52,17 @@ class Post extends CI_Controller
         $thepost = $this->Post_mdl->get('id', $post['pid'], 'id', array('ishidden' => '0', 'comment_status' => 1));
         if (!$thepost) {show_error('不允许评论的文章！');}
         $current_url = $post['current_url'];
-        unset($post['current_url']);
-        if (count($post) < 5) show_error('请填写完整！');
+        if (count($post) < 7) show_error('请填写完整！');
+        $comment = array(
+            'pid' => $post['pid'],
+            'reid' => $post['reid'],
+            'username' => $post['username'],
+            'usermail' => $post['usermail'],
+            'userurl' => $post['userurl'],
+            'content' => $post['content'],
+        );
         $this->load->model('Comment_mdl');
-        $comment = $this->Comment_mdl->add($post);
+        $comment = $this->Comment_mdl->add($comment);
         if ($comment) {
             redirect($current_url.'#comments_id_'.$comment);
         } else {
