@@ -38,7 +38,7 @@
             <td><?php echo $line['logintime'];?></td>
             <td><?php echo $line['loginip']?></td>
             <td><?php echo $group[$line['group']];?></td>
-            <td><?php echo $line['isverify'] ? '[通过]' : '[审核]'; echo $line['status'] ? ' [正常]' : ' [禁止]';?></td>
+            <td><?php echo $line['isverify'] ? '[通过]' : '[验证中]'; echo $line['status'] ? ' [正常]' : ' [禁止]';?></td>
             <td><a href="<?php echo site_url('admin/user/edit/'.$line['uid']);?>" title="编辑用户">编辑</a> | <a href="<?php echo site_url('admin/user/del/'.$line['uid']);?>" title="删除用户">删除</a></td>
         </tr>
         <?php
