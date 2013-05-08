@@ -18,7 +18,7 @@
     <div class="avatar" ><a href="<?php echo site_url('profile');?>"><img src="http://www.gravatar.com/avatar/<?php echo md5(strtolower($user['usermail']))?>?s=44" /></a><br /><a href="http://www.iplaysoft.com/gravatar.html" target="_blank" title="更换头像">更换头像</a></div>
     <div class="other">
         <p>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：<strong><?php echo $user['username'];?></strong>&nbsp;&nbsp;&nbsp;<a href="#update" title="更新个人资料">更新资料</a>&nbsp;&nbsp;&nbsp;<a href="<?php echo site_url('login/loginout');?>" title="退出登录">登出</a></p>
-        <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：<?php echo $user['usermail'];?></p>
+        <p>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：<?php echo $user['usermail'];?> <?php echo !$user['isverify'] ? '<a href="javascript:;" onclick="resend_verifymail(\''.$user['usermail'].'\');" title="邮件尚未激活,未收到激活邮件?点击重新发送验证邮件">未激活</a>' : '';?></p>
         <?php echo $user['userurl'] ? '<p>网&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：<a href="'.$user['userurl'].'" target="_blank">'.$user['userurl'].'</a></p>' : '';?>
         <p>用&nbsp;&nbsp;户&nbsp;&nbsp;组：<?php echo $this->User_mdl->group[$user['group']].($user['group'] == 1 ? '&nbsp;&nbsp;&nbsp;<a href="'.site_url('admin').'">后台管理</a>' : '');?></p>
         <p>加入时间：<?php echo $user['regtime'];?></p>
@@ -35,7 +35,7 @@
         <h3>更新资料</h3>
         <form method="post" action="<?php echo site_url('profile/update');?>" onsubmit="return checkupdate_form();">
             <p>邮箱 <span class="required">*</span></p>
-            <p><input type="text" name="usermail" class="usermail" value="<?php echo $user['usermail'];?>" /> 账号绑定邮箱，可用来登录</p>
+            <p><input type="text" name="usermail" class="usermail" value="<?php echo $user['usermail'];?>" /> 绑定邮箱，可用来登录</p>
             <p>网址 </p>
             <p><input type="text" name="userurl" class="userurl" value="<?php echo $user['userurl'];?>" /></p>
             <p>密码 </p>
@@ -63,6 +63,15 @@
                 $('.form .userurl').focus();
                 return false;                      
             }   
+        }
+        function resend_verifymail(usermail) {
+            $.post('<?php echo site_url('login/resend_verifymail');?>', function(data) {
+                if (data == 'success') {
+                    alert('已重新发送验证邮件至['+usermail+']，请查收！')
+                } else {
+                    alert(data);
+                }
+            })
         }
         </script>
     </div>
