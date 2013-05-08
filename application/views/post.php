@@ -20,8 +20,8 @@
             <div class="post_content"><?php echo $post['content'];?></div>
             <div class="post_meta">本文章发布于 <a href="<?php echo site_url(get_from_array($categorys, 'id', $post['category'], 'channeltype').'/'.$post['id'].'/'.$post['slug']);?>"><?php echo $post['posttime']?></a>。
             属于 <?php echo getParCategory($categorys, $post['category'], '<a category_id="%u" href="'.site_url('category/%s').'">%s</a>', ' 、 ');?> 分类。
-            <?php echo $post['tag'] ? '被贴了'.showtag($post['tag'], $thetag, '<a href="'.site_url('tag/%s').'">%s</a>', ' 、 ').'标签' : '';?>。
-            <?php echo $post['uid'] == $this->User_mdl->uid ? '<a href="'.site_url('admin/post/edit/'.$post['id']).'">编辑</a>' : ''?></div>
+            <?php echo $post['tag'] ? '被贴了'.showtag($post['tag'], $thetag, '<a href="'.site_url('tag/%s').'">%s</a>', ' 、 ').'标签。' : '';?>
+            </div>
         </div>
         <div class="post_near">
         <?php echo $near_post['prev'] ? '<a href="'.site_url(get_from_array($categorys, 'id', $near_post['prev']['category'], 'channeltype').'/'.$near_post['prev']['id'].'/'.$near_post['prev']['slug']).'" class="prev_link" title = "上一篇《'.$near_post['prev']['title'].'》"> ← '.$near_post['prev']['title'].'</a>': '';?>
@@ -54,6 +54,7 @@
                 <p><input type="submit" value="发表评论" class="comment_submit" /></p>
             </form>
             <script type="text/javascript">
+            //检查提交表单
             function check_comment_submit() {
                 if ($('#respond .username').val().length < 1) {
                     alert('姓名不能为空，请填写！');
@@ -70,10 +71,22 @@
                 }
             }
             
+            //回复表单
             function go_reply(reid) {
                 $('#respond .reid').val(reid);
             }
+            
+            //更新浏览量
             $.post('<?php echo site_url(get_from_array($categorys, 'id', $post['category'], 'channeltype').'/ACT_update_click')?>', {id : '<?php echo $post['id'];?>'});
+            
+            $(function(){
+                $.get('<?php echo site_url(get_from_array($categorys, 'id', $post['category'], 'channeltype').'/ACT_show_edit_link?id='.$post['id'].'&uid='.$post['uid']);?>', function(data) {
+                    data = eval('(' + data + ')');
+                    if (data.status == 'yes') {
+                        $('.post_meta').append('<a href="'+data.url+'" target="_blank">编辑</a>');
+                    }
+                })                
+            })
             </script>
         </div>
         <?php } ?>

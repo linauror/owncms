@@ -81,7 +81,30 @@ class Post extends CI_Controller
             $this->load->model('Post_mdl');
             $this->Post_mdl->update_field('click', $this->input->post('id')); //更新浏览量            
         }
-    }     
+    }
+    
+    /**
+     * Post::ACT_show_edit_link()
+     * 检测是否有编辑权限
+     * @return void
+     */
+    public function ACT_show_edit_link()
+    {
+        $uid = $this->User_mdl->uid;
+        if (!$uid) exit('{"status" : "no"}');
+        $get = $this->input->get();
+        $group = $this->User_mdl->get('group', $uid);
+        $return['status'] = 'yes';
+        if ($group < 3) {
+            $return['url'] = site_url('admin/post/edit/'.$get['id']);
+            exit(json_encode($return));
+        } elseif ($get['uid'] == $uid) {
+            $return['url'] = site_url('profile/post_edit/'.$get['id']);
+            exit(json_encode($return));           
+        } else{
+            exit('{"status" : "no"}');
+        }
+    }      
 }
 
 /* End of file post.php */
