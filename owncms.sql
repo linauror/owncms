@@ -233,8 +233,8 @@ CREATE TABLE `userlog` (
   `msg` varchar(600) NOT NULL,
   `ip` char(19) NOT NULL,
   `time` datetime NOT NULL,
-  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：后台操作2：登录相关',
+  `type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '1：后台操作2：用户操作',
   PRIMARY KEY (`id`,`uid`)
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='用户操作日志';
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
 
