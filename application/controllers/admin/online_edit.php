@@ -64,7 +64,7 @@ class Online_edit extends CI_Controller
         !is_really_writable($path) && admintip('error:文件不可写，请检查权限是否为可写！');
         $f = fopen($path, 'w');
         if (fwrite($f, $content)) {
-            $this->User_mdl->userlog_add('【系统】在线编辑文件：'.$path);
+            $this->User_mdl->userlog_add('【文件】在线编辑文件：'.$path);
             fclose($f);
             admintip('成功保存文件！');
         }
