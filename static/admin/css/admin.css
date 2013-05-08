@@ -48,7 +48,7 @@ body { font:12px/25px Verdana, Geneva, sans-serif; background:#f9f9f9; width:100
 -----------------------------------------------*/
 #header { width:100%; height:90px; border-bottom:1px solid #ccc; background:#fff; position:relative; }
 #header h1 { padding:5px; padding-left:5px; }
-.welcome { height:25px; width:310px; position:absolute; left:250px; top:10px; }
+.welcome { height:25px; width:330px; position:absolute; left:250px; top:10px; }
 .welcome a { margin-left:20px; color:#06F; }
 .top_search { height:18px; width:300px; position:absolute; left:800px; top:10px; }
 .top_search input[type="text"] { width:200px; padding:0 2px; margin-right:10px; }
