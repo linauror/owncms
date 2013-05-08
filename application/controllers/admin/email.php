@@ -44,7 +44,7 @@ class Email extends CI_Controller
         $str .= "\n\n/* End of file email.php */\n/* Location: ./application/config/email.php */";
         if (file_put_contents('application/config/email.php', $str))
         {
-            $this->User_mdl->userlog_add('更新邮件配置');
+            $this->User_mdl->userlog_add('【系统配置】更新邮件配置');
             admintip('成功更新邮件配置！');
         }
         else
@@ -62,17 +62,8 @@ class Email extends CI_Controller
      */
     public function test()
     {
-        include ('application/config/email.php');
-        $this->load->library('email', $config);
         $testmailto = $this->input->post('testmailto');
-        $this->email->from($config['smtp_user'], $config['smtp_user']);
-        $this->email->to($testmailto);
-        $this->email->subject('test mail');
-        $this->email->message('it\'s just a test, from OWNCMS');
-        if ($this->email->send()) {
-            exit('success');
-        }
-        exit($this->email->print_debugger());   
+        exit(sendmail($testmailto, 'test mail', 'it\'s just a test, from OWNCMS'));   
     }
 
     // ------------------------------------------------------------------------
