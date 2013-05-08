@@ -43,10 +43,10 @@ class Login extends CI_Controller
         if ($username && $password) {
             $login = $this->User_mdl->login($username, $password, $expired);
             if ($login['errorcode'] === 0) {
-                $this->User_mdl->userlog_add('登录', 2, $login['user']['uid']);
+                $this->User_mdl->userlog_add('【登录】登录', 2, $login['user']['uid']);
                 redirect($refer ? $refer : 'admin/index');
             } else {
-                $this->User_mdl->userlog_add('登录失败：尝试同户名['.$username.']，尝试密码['.$password.']', 2);
+                $this->User_mdl->userlog_add('【登录】登录失败：尝试同户名['.$username.']，尝试密码['.$password.']', 2);
                 show_message($error[$login['errorcode']], 'admin/login?refer='.$refer, '登录失败');
             }
         }
@@ -64,7 +64,7 @@ class Login extends CI_Controller
      */
     public function loginout()
     {
-        $this->User_mdl->userlog_add('注销登录', 2);
+        $this->User_mdl->userlog_add('【登录】注销登录', 2);
         $this->User_mdl->loginout();
         $refer = $this->input->get('refer');
         redirect($refer ? $refer : 'admin/login');
