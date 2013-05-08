@@ -263,6 +263,33 @@ if (!function_exists('showtag'))
     }
 }
 
+// --------------------------------------------------------------------
+
+if (!function_exists('sendmail'))
+{
+    /**
+     * sendmail()
+     * 发送邮件
+     * @param mixed $to
+     * @param mixed $subject
+     * @param mixed $message
+     * @return
+     */
+    function sendmail($to, $subject, $message)
+    {
+        $CI = & get_instance();
+        include ('application/config/email.php');
+        $CI->load->library('email', $config);
+        $CI->email->from($config['smtp_user'], $config['smtp_user']);
+        $CI->email->to($to);
+        $CI->email->subject($subject);
+        $CI->email->message($message);        
+        if ($CI->email->send()) {
+            return 'success';
+        }
+        return $CI->email->print_debugger();
+    }
+}
 
 // --------------------------------------------------------------------
 
