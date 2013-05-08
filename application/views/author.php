@@ -28,7 +28,6 @@
             <div class="post_content"><?php echo $line['content'];?></div>
             <div class="post_meta">本文章发布于 <a href="<?php echo site_url($line['channeltype'].'/'.$line['id'].'/'.$line['slug']);?>"><?php echo $line['posttime']?></a>。
             属于 <?php echo getParCategory($categorys, $line['category'], '<a category_id="%u" href="'.site_url('category/%s').'">%s</a>', ' 、 ');?> 分类。
-            <?php echo $line['uid'] == $this->User_mdl->uid ? '<a href="'.site_url('admin/post/edit/'.$line['id']).'">编辑</a>' : ''?>
             </div>
         </div>
     <?php } ?>

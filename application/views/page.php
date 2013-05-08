@@ -17,7 +17,6 @@
     <div class="post_list">
         <h1 class="post_title"><?php echo $page['title'];?></h1>
         <div class="post_content"><?php echo $page['content'];?></div>
-        <?php echo $page['uid'] == $this->User_mdl->uid ? '<a href="'.site_url('admin/page/edit/'.$page['id']).'" class="edit_link">编辑</a>' : ''?>
     </div>
     </div>
     <?php $this->load->view('right');?>
