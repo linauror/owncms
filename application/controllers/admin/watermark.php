@@ -44,7 +44,7 @@ class Watermark extends CI_Controller
         $str .= "\n\n/* End of file image_lib.php */\n/* Location: ./application/config/image_lib.php */";
         if (file_put_contents('application/config/image_lib.php', $str))
         {
-            $this->User_mdl->userlog_add('更新图片水印配置');
+            $this->User_mdl->userlog_add('【系统配置】更新图片水印配置');
             admintip('成功更新图片水印配置！');
         }
         else
