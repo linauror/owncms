@@ -130,20 +130,17 @@ class User_mdl extends CI_Model
         $post['password'] = md5($post['password']. $this->encryption_key);
         $post['regip'] = $post['loginip'] = $this->input->ip_address();
         $post['regtime'] = $post['logintime'] = date('Y-m-d H:i:s');
-              
+        
         $this->db->insert(self::TABLE, $post);
+        $uid = $this->db->insert_id();       
         
         //发送注册邮件
-        include ('application/config/email.php');
-        $config['mailtype'] = 'html';
-        $this->load->library('email', $config);
-        $this->email->from($config['smtp_user'], $config['smtp_user']);
-        $this->email->to($post['usermail']);
-        $this->email->subject('欢迎加入：'.$this->Siteconfig_mdl->get('value', 'short_sitename'));
-        $this->email->message('<p>'.$post['username'].'，你好</p><p>欢迎加入：'.$this->Siteconfig_mdl->get('value', 'short_sitename').'</p><p>此邮箱将作为取回密码的重要依据。请妥善保管。</p>');        
-        $this->email->send();
+        $now = mktime();
+        $url = site_url('login/verify?time='.$now.'&uid='.$uid.'&username='.$post['username'].'&usermail='.$post['usermail'].'&auth='.md5($now.$uid.$post['username'].$post['usermail'].$this->encryption_key));
+        $message = $this->load->view('email_tpl/register', array('username' => $post['username'], 'url' => $url), true);
+        sendmail($post['usermail'], '欢迎注册本网站，请激活邮箱', $message);
         
-        return $this->db->insert_id();
+        return $uid;
     }
     
     // ------------------------------------------------------------------------
@@ -181,10 +178,10 @@ class User_mdl extends CI_Model
      */
     public function update($post, $id) 
     {
-        if ($post['password'] == '') unset($post['password']);
         if (strlen($post['username']) < 4 && strlen($post['username']) > 20) return -1; //用户名长度不符
         if (!preg_match('/^[\w]+$/', $post['username'])) return -2; //用户名格式不正确
         if (!preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail'])) return -3; //邮箱格式不正确
+        if (isset($post['password']) && $post['password'] == '') unset($post['password']);
         if (isset($post['password']) && strlen($post['password']) < 6 || strlen($post['username']) > 20) return -4; //密码长度不符
         
         $this->db->where_not_in('uid', $id);
@@ -355,9 +352,12 @@ class User_mdl extends CI_Model
             $u = $this->encrypt->decode($this->input->cookie($this->userlogin_cookiename));
             $user = explode("\t", $u);
             if (count($user) == 5 && is_numeric($user[0]) && mktime() - $user[4] < $user[3]) {
+                $status = $this->get('status', $user[0]);
+                if (!$status) return false;
                 $this->uid = $user[0];
                 $this->username = $user[1];
                 $this->usermail = $user[2];
+                
                 return true;
             }
         }
@@ -367,7 +367,7 @@ class User_mdl extends CI_Model
     
     public function get_userlog_list($array = array()) {
         
-        $this->types = array(1 => '操作日志', 2 => '登录日志');
+        $this->types = array(1 => '后台操作', 2 => '用户操作');
         
         $array = $array && count($array) ? array_diff($array, array('')) : array();
         
@@ -444,7 +444,7 @@ class User_mdl extends CI_Model
         if (is_array($id)) {
             $this->db->where_in('id', $id);
             $this->db->delete(self::TABLE_LOG);
-            return true;
+            return $this->db->affected_rows();
         }
         $this->db->delete(self::TABLE_LOG, array('id' => $id));
         return true;
