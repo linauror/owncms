@@ -200,7 +200,7 @@ class User extends CI_Controller
         $post = $this->input->post('id');
         if ($post) {
             $post = $this->User_mdl->userlog_del($post);
-            $this->User_mdl->userlog_add('【用户日志】批量删除用户日志');
+            $this->User_mdl->userlog_add('【用户日志】批量删除'.$post.'项用户日志');
             admintip('成功批量删除用户日志！');   
         }
         admintip('error:请选择删除项目！');
