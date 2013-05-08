@@ -1,6 +1,7 @@
   <?php $this->load->view('admin/header')?>
   <div id="content">
   <form action="<?php echo site_url('admin/email/save')?>" method="post" >
+  <input type="hidden" name="mailtype" value="html" />
     <table class="table">
         <thead>
           <tr>
