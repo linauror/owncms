@@ -231,17 +231,14 @@ class Post_mdl extends CI_Model
      */
     public function update_field($filed, $id, $value = '') 
     {
-        if (in_array($filed, array('click', 'comment_count'))) {
-            $this->db->where('id', $id);
-            if ($value && $value > 0 && is_numeric($value)) {
-                $this->db->set($filed, $value);
-            } else {
-                $this->db->set($filed, $filed.' + 1', FALSE); 
-            }
-            $this->db->update(self::TABLE);
-            return $this->db->affected_rows();
-        }
-        return false; 
+		$this->db->where('id', $id);
+		if (is_numeric($value)) {
+			$this->db->set($filed, $value);
+		} else {
+			$this->db->set($filed, $filed.' + 1', FALSE); 
+		}
+		$this->db->update(self::TABLE);
+		return $this->db->affected_rows();
     }
     
     // ------------------------------------------------------------------------
