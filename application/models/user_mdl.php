@@ -126,8 +126,8 @@ class User_mdl extends CI_Model
         if ($this->checkuser('username', $post['username'])) return -5; //用户名已经存在
         if ($this->checkuser('usermail', $post['usermail'])) return -6; //用户邮箱已经存在
         
-        $this->load->library('encrypt');
-        $post['password'] = md5($post['password']. $this->encryption_key);
+        $post['salt'] = substr(uniqid(), -6);
+        $post['password'] = md5($post['password']. $post['salt']);
         $post['regip'] = $post['loginip'] = $this->input->ip_address();
         $post['regtime'] = $post['logintime'] = date('Y-m-d H:i:s');
         
@@ -192,7 +192,10 @@ class User_mdl extends CI_Model
         $this->db->where('usermail', $post['usermail']);
         if ($this->db->get(self::TABLE)->num_rows) return -6; //用户邮箱已经存在
         
-        if (isset($post['password'])) $post['password'] = md5($post['password']. $this->encryption_key);
+        if (isset($post['password'])) {
+            $post['salt'] = substr(uniqid(), -6);
+            $post['password'] = md5($post['password']. $post['salt']);
+        }
         
         $this->db->update(self::TABLE, $post, array('uid' => $id));
         return $this->db->affected_rows();
@@ -278,20 +281,16 @@ class User_mdl extends CI_Model
         $this->load->library('encrypt');
         $expired = $expired ? $expired : $this->config->item('userlogin_expired');
         $is_email = strpos($username, '@') != false ? true : false;
-        $user = $this->db->get_where(self::TABLE, array(($is_email ? 'usermail' : 'username') => $username, 'password' => md5($password. $this->encryption_key)))->row_array();
+        $user = $this->db->get_where(self::TABLE, array(($is_email ? 'usermail' : 'username') => $username))->row_array();
         if (count($user)) {
-            if ($user['status'] == 0) {
-                return array('errorcode' => -1); // 用户被禁止
-            }
+            if ($user['password'] != md5($password.$user['salt'])) return array('errorcode' => -2, 'message' => '密码错误'); //密码错误
+            if ($user['status'] == 0) return array('errorcode' => -1, 'message' => '用户被禁止'); // 用户被禁止
             $now = mktime();
             $this->input->set_cookie($this->userlogin_cookiename, $this->encrypt->encode("$user[uid]\t$user[username]\t$user[usermail]\t$now\t$expired"), $expired);
             $this->db->update(self::TABLE, array('logintime' => date('Y-m-d H:i:s'), 'loginip' => $this->input->ip_address(), 'logedtime' => $user['logintime'], 'logedip' => $user['loginip'], 'logincount' => $user['logincount'] + 1), array('uid' => $user['uid']));
-            return array('errorcode' => 0, 'user' => $user);  //登录成功
+            return array('errorcode' => 0, 'user' => $user);  //登录成功            
         } else {
-            if ($this->checkuser(($is_email ? 'usermail' : 'username'), $username)) {
-                return array('errorcode' => -2); //密码错误
-            } 
-            return array('errorcode' => -3); //用户名不存在
+            return array('errorcode' => -3, 'message' => '用户不存在'); //用户名不存在
         }
     } 
     

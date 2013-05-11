@@ -199,7 +199,8 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE `user` (
   `uid` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `username` varchar(20) NOT NULL COMMENT '用户名',
-  `password` varchar(32) NOT NULL COMMENT '密码',
+  `password` char(32) NOT NULL COMMENT '密码',
+  `salt` char(6) NOT NULL COMMENT '加密字符串',
   `usermail` varchar(20) NOT NULL COMMENT '用户邮箱',
   `userurl` varchar(50) NOT NULL COMMENT '用户网址',
   `logintime` datetime NOT NULL COMMENT '登录时间',
@@ -217,8 +218,7 @@ CREATE TABLE `user` (
   UNIQUE KEY `usermail` (`usermail`)
 ) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
-INSERT INTO user (`uid`, `username`, `password`, `usermail`, `userurl`, `logintime`, `loginip`, `logedtime`, `logedip`, `regip`, `regtime`, `group`, `isverify`, `status`, `logincount`) VALUES (1, 'admin', '786b2e2ab12b9806705117a21127e0ba', 'lms514168424@qq.com', 'http://www.linauror.com', '2013-04-22 18:05:27', '127.0.0.1', '2013-04-22 18:04:14', '127.0.0.1', '', '0000-00-00 00:00:00', 1, 1, 1, 16);
-INSERT INTO user (`uid`, `username`, `password`, `usermail`, `userurl`, `logintime`, `loginip`, `logedtime`, `logedip`, `regip`, `regtime`, `group`, `isverify`, `status`, `logincount`) VALUES (3, 'test', 'dc28247369ba3eb0df9d34fdad6d677d', 'test@test.com', 'http://owncms.linauror.com', '2013-04-11 23:09:57', '127.0.0.1', '2013-04-11 23:09:15', '127.0.0.1', '', '0000-00-00 00:00:00', 2, 1, 1, 4);
+INSERT INTO user (`uid`, `username`, `password`, `salt`, `usermail`, `userurl`, `logintime`, `loginip`, `logedtime`, `logedip`, `regip`, `regtime`, `group`, `isverify`, `status`, `logincount`) VALUES (1, 'admin', '03911435427c5b3acfecd801f56aeae4', 'abcdef', 'lms514168424@qq.com', 'http://www.linauror.com', '2013-04-22 18:05:27', '127.0.0.1', '2013-04-22 18:04:14', '127.0.0.1', '', '0000-00-00 00:00:00', 1, 1, 1, 16);
 
 
 #
