@@ -191,11 +191,14 @@ class Comment_mdl extends CI_Model
     public function del($id) 
     {
         if (is_array($id)) {
-            $this->db->where_in('id', $id);
-            $pids = $this->db->select('pid')->group_by('pid')->get(self::TABLE)->result_array();
-            foreach ($pids as $line) {
-                clear_this_cache($line['pid']);
-                $this->db->set('comment_count', 'comment_count - 1', false)->where('id', $line['pid'])->update(self::TABLE_POST);
+            foreach ($id as $line) {
+                $pid_array = $this->db->select('pid')->get_where(self::TABLE, array('id' => $line))->row_array();
+                $pids[] = $pid_array['pid'];
+            }
+            $pids = array_count_values($pids);            
+            foreach ($pids as $key => $value) {
+                clear_this_cache($key);
+                $this->db->set('comment_count', 'comment_count - '.$value, false)->where('id', $key)->update(self::TABLE_POST);
             }
             $this->db->where_in('id', $id);
             $this->db->delete(self::TABLE);
