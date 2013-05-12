@@ -193,12 +193,10 @@ class Comment_mdl extends CI_Model
         if (is_array($id)) {
             $this->db->where_in('id', $id);
             $pids = $this->db->select('pid')->group_by('pid')->get(self::TABLE)->result_array();
-            $pidsA = array();
             foreach ($pids as $line) {
-                $pidsA[] = $line['pid'];
                 clear_this_cache($line['pid']);
+                $this->db->set('comment_count', 'comment_count - 1', false)->where('id', $line['pid'])->update(self::TABLE_POST);
             }
-            count($pidsA) && $this->db->set('comment_count', 'comment_count - 1', false)->where_in('id', $pidsA)->update(self::TABLE_POST);
             $this->db->where_in('id', $id);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
