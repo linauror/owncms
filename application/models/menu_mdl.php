@@ -93,15 +93,15 @@ class Menu_mdl extends CI_Model
      * 更新菜单
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
         $this->db->where_not_in('id', $id);
         $this->db->where('url', $post['url']);
         $check = $this->db->get(self::TABLE)->num_rows();
-        if (!$check) {
-            $this->db->update(self::TABLE, $post, array('id' => $id));
+        if (!$check && $this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
             return $this->db->affected_rows();
         }
         return false; 
@@ -113,50 +113,21 @@ class Menu_mdl extends CI_Model
      * Menu_mdl::del()
      * 删除菜单
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         $data = $this->get('nav, url', $id);
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
-    }
-
-    public function get_top_nav($array, $reid)
-    {
-        foreach ($array as $line) {
-            if ($reid == $line['id']) {
-                if ($line['reid'] == 0) {
-                    return $line['id'];
-                } else {
-                   return $this->get_top_nav($array, $line['reid']); 
-                }
-            }
-        }
-                   
-    }  
-    
-    /**
-     * Menu_mdl::show_menu_nav()
-     * 
-     * @param integer $reid
-     * @param integer $current_nav
-     * @param string $container_class
-     * @param string $sub_class
-     * @return
-     */
-    public function show_menu_nav($reid = 0, $current_nav = '', $container_class = 'menu_container', $sub_class = 'sub_menu')
-    {
-        $array = $this->get_list();
-        $current_nav = $this->get('id', $current_nav, 'url');
-        $current_nav = $this->get_top_nav($array, $current_nav);
-        return show_menu_nav($array, $reid, $current_nav, $container_class, $sub_class);
-    }
+    } 
 
 }
 

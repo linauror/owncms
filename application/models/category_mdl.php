@@ -117,15 +117,15 @@ class Category_mdl extends CI_Model
      * 更新分类目录
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
         $this->db->where_not_in('id', $id);
         $this->db->where('slug', $post['slug']);
         $check = $this->db->get(self::TABLE)->num_rows();
-        if (!$check) {
-            $this->db->update(self::TABLE, $post, array('id' => $id));
+        if (!$check && $this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
             return $this->db->affected_rows();
         }
         return false; 
@@ -137,17 +137,19 @@ class Category_mdl extends CI_Model
      * Category_mdl::del()
      * 删除分类目录
      * @param mixed $id
+     * @param array $array
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();;
         }
         $data = $this->get('typename, slug', $id);
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }
 

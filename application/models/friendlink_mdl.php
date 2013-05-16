@@ -96,12 +96,15 @@ class Friendlink_mdl extends CI_Model
      * 更新链接
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
-        $this->db->update(self::TABLE, $post, array('id' => $id));
-        return $this->db->affected_rows();
+        if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
+            return $this->db->affected_rows();
+        }
+        return false;
     }
     
     // ------------------------------------------------------------------------
@@ -110,17 +113,19 @@ class Friendlink_mdl extends CI_Model
      * friendlink_mdl::del()
      * 删除变量
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         $data = $this->get('title,url', $id);
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }
 

@@ -174,9 +174,10 @@ class User_mdl extends CI_Model
      * 更新用户
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
         if (strlen($post['username']) < 4 && strlen($post['username']) > 20) return -1; //用户名长度不符
         if (!preg_match('/^[\w]+$/', $post['username'])) return -2; //用户名格式不正确
@@ -197,8 +198,10 @@ class User_mdl extends CI_Model
             $post['password'] = md5($post['password']. $post['salt']);
         }
         
-        $this->db->update(self::TABLE, $post, array('uid' => $id));
-        return $this->db->affected_rows();
+        if ($this->db->update(self::TABLE, $post, array_merge(array('uid' => $id), $where))) {
+            return $this->db->affected_rows();
+        }
+        return false;
     }   
      
     // ------------------------------------------------------------------------
@@ -207,19 +210,21 @@ class User_mdl extends CI_Model
      * Post_mdl::del()
      * 删除用户
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             if (in_array($id, 1)) return false;
             $this->db->where_in('uid', $id);
+            count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         if ($id == 1) return false;
         $data = $this->get('username', $id);
-        $this->db->delete(self::TABLE, array('uid' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('uid' => $id), $where));
         return $data;
     }
         

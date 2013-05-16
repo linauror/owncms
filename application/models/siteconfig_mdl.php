@@ -122,15 +122,16 @@ class Siteconfig_mdl extends CI_Model
      * Siteconfig_mdl::del()
      * 删除变量
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if ($id < 5) {
             return false;
         }
         $data = $this->get('varname', $id, 'id');
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }
 

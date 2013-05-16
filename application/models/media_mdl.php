@@ -136,12 +136,15 @@ class Media_mdl extends CI_Model
      * 更新媒体
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
-        $this->db->update(self::TABLE, $post, array('id' => $id));
-        return $this->db->affected_rows();
+        if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
+            return $this->db->affected_rows();
+        }
+        return false;
     }
          
     // ------------------------------------------------------------------------
@@ -150,18 +153,20 @@ class Media_mdl extends CI_Model
      * Media_mdl::del()
      * 删除媒体
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         $data = $this->get('title,filepath', $id);
         strstr($data['filepath'], base_url()) && @unlink(str_replace(base_url(), getcwd().'/', $data['filepath']));
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }
       

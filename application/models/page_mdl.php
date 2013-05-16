@@ -100,9 +100,10 @@ class Page_mdl extends CI_Model
      * 更新单页文档
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
         $this->db->where_not_in('id', $id);
         $this->db->where('slug', $post['slug']);
@@ -110,8 +111,10 @@ class Page_mdl extends CI_Model
         if (!$check) {
             clear_this_cache($post['slug'], 'page');
             $post['modifytime'] = date('Y-m-d H:i:s');
-            $this->db->update(self::TABLE, $post, array('id' => $id));
-            return $this->db->affected_rows();
+            if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
+                return $this->db->affected_rows();
+            }
+            return false;
         }
         return false; 
     }
@@ -122,12 +125,14 @@ class Page_mdl extends CI_Model
      * page_mdl::del()
      * 删除单页文档
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where($where);
             $pages = $this->db->select('slug')->get(self::TABLE)->result_array();
             foreach ($pages as $line) {
                 clear_this_cache($line['slug'], 'page');
@@ -137,7 +142,7 @@ class Page_mdl extends CI_Model
         }
         $data = $this->get('title,slug', $id);
         clear_this_cache($data['slug'], 'page');
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }
 

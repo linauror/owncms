@@ -170,11 +170,12 @@ class Comment_mdl extends CI_Model
      * 更新评论
      * @param mixed $post
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function update($post, $id) 
+    public function update($post, $id, $where = array()) 
     {
-        if ($this->db->update(self::TABLE, $post, array('id' => $id))) {
+        if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
             return $this->db->affected_rows();
         }
         return false;
@@ -186,13 +187,14 @@ class Comment_mdl extends CI_Model
      * comment_mdl::del()
      * 删除评论
      * @param mixed $id
+     * @param array $where
      * @return void
      */
-    public function del($id) 
+    public function del($id, $where = array()) 
     {
         if (is_array($id)) {
             foreach ($id as $line) {
-                $pid_array = $this->db->select('pid')->get_where(self::TABLE, array('id' => $line))->row_array();
+                $pid_array = $this->db->select('pid')->get_where(self::TABLE, array_merge(array('id' => $line), $where))->row_array();
                 $pids[] = $pid_array['pid'];
             }
             $pids = array_count_values($pids);            
@@ -201,12 +203,13 @@ class Comment_mdl extends CI_Model
                 $this->db->set('comment_count', 'comment_count - '.$value, false)->where('id', $key)->update(self::TABLE_POST);
             }
             $this->db->where_in('id', $id);
+            count($where) && $this->db->where();
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         $this->db->set('comment_count', 'comment_count - 1', false)->where('id', $this->get('pid', $id))->update(self::TABLE_POST);
         clear_this_cache($this->get('pid', $id));
-        $this->db->delete(self::TABLE, array('id' => $id));
+        $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return true;
     }
 
