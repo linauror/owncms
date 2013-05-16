@@ -73,17 +73,42 @@ if (!function_exists('show_menu_nav'))
      * @param string $class
      * @return
      */
-    function show_menu_nav($array, $reid = 0, $current_nav = 1, $container_class = 'menu_container', $sub_class = 'sub_menu')
+    function show_menu_nav($array, $reid = 0, $current_nav = 'index', $container_class = 'menu_container', $sub_class = 'sub_menu')
     {
         $html = '';
         foreach ($array as $line) {
             if ($line['reid'] == $reid) {
-                $html .= '<li class="menu-item menu-nav-'.$line['id'].($line['id'] == $current_nav || $line['reid'] == $current_nav ? ' current' : '').'"><a href="'.site_url($line['url']).'" target = "'.$line['target'].'">'.$line['nav'].'</a>';
+                $html .= '<li class="menu-item menu-nav-'.$line['id'].($line['id'] == get_top_nav($array, get_from_array($array, 'url', $current_nav, 'id')) ? ' current' : '').'"><a href="'.site_url($line['url']).'" target = "'.$line['target'].'">'.$line['nav'].'</a>';
                 $html .= show_menu_nav($array, $line['id'], $current_nav, $container_class, $sub_class);
                 $html .= '</li>';
             }
         }
         return $html ? '<ul class = "'.($reid ? $sub_class : $container_class).'">'.$html.'</ul>' : $html ;
+    }
+}
+
+// --------------------------------------------------------------------
+
+if (!function_exists('get_top_nav'))
+{
+    /**
+     * get_top_nav()
+     * 寻找顶级菜单
+     * @param mixed $array
+     * @param integer $reid
+     * @return
+     */
+    function get_top_nav($array, $reid)
+    {
+        foreach ($array as $line) {
+            if ($reid == $line['id']) {
+                if ($line['reid'] == 0) {
+                    return $line['id'];
+                } else {
+                   return get_top_nav($array, $line['reid']); 
+                }
+            }
+        }
     }
 }
 
