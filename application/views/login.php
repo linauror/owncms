@@ -19,9 +19,9 @@
             <form method="post" action="<?php echo site_url('login/logining');?>" onsubmit="return checklogin_form();">
                 <input type="hidden" name="refer" value="<?php echo $refer;?>" />
                 <p>账号/邮箱 <span class="required">*</span></p>
-                <p><input type="text" name="username" class="username" value="" /> &nbsp;&nbsp;&nbsp;<a href="<?php echo site_url('login/register');?>">免费注册</a></p>
+                <p><input type="text" name="username" class="username" value="" tabindex="1" /> &nbsp;&nbsp;&nbsp;<a href="<?php echo site_url('login/register');?>">免费注册</a></p>
                 <p>密码 <span class="required">*</span></p>
-                <p><input type="password" name="password" class="password" value="" /> &nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="getpassword();">忘记密码？</a></p>
+                <p><input type="password" name="password" class="password" value="" tabindex="2" /> &nbsp;&nbsp;&nbsp;<a href="javascript:;" onclick="getpassword();">忘记密码？</a></p>
                 <p><input type="submit" value="登录" class="comment_submit" /><input type="checkbox" value="2592000" name="expired" id="expired" /> <label for="expired">保持登录</label></p>
             </form>
             <script type="text/javascript">
