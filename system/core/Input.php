@@ -349,7 +349,7 @@ class CI_Input {
 		}
 		else
 		{
-			$this->ip_address = $_SERVER['REMOTE_ADDR'];
+			$this->ip_address = $_SERVER['HTTP_X_FORWARDED_FOR']; //暂时用这个 
 		}
 
 		if ( ! $this->valid_ip($this->ip_address))
