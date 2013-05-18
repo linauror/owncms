@@ -48,7 +48,7 @@ class Post extends CI_Controller
         $html['categorys'] = $categorys;
         $html['category'] = $this->input->get('category') ? get_from_array($categorys, 'slug', $this->input->get('category'), 'id') : 0;
         $html['pagination'] = $this->pagination->create_links(); 
-        $html['post'] = $post['list'];
+        $html['post'] = $post;
         $html['tags'] = $tags;
         $this->load->view('admin/post', $html);
     }

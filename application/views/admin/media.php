@@ -7,7 +7,7 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="11"><a href="?">所有媒体</a>   
+          <th colspan="11"><a href="?">所有媒体</a>  共 <strong><?php echo $media['total']?></strong> 项 
           </th>
         </tr>
       <tr class="table_title">
@@ -23,8 +23,8 @@
       </thead>
      <tbody>
      <?php
-     if(count($media)){
-        foreach($media as $line){
+     if($media['total']){
+        foreach($media['list'] as $line){
      ?>
         <tr>
           <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['id'];?>" /></td>

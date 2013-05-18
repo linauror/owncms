@@ -4,7 +4,7 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="11"><a href="?">所有评论</a>
+          <th colspan="11"><a href="?">所有评论</a> 共 <strong><?php echo $comment['total']?></strong> 项 
           </th>
         </tr>
       <tr class="table_title">
@@ -18,8 +18,8 @@
       </thead>
      <tbody>
      <?php
-     if(count($comment)){
-        foreach($comment as $line){
+     if($comment['total']){
+        foreach($comment['list'] as $line){
      ?>
         <tr>
           <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['id'];?>" /></td>

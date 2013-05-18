@@ -32,9 +32,8 @@ class Comment extends CI_Controller
         $page['total_rows'] = $comment['total'];
         $page['per_page'] = 20;
         $this->pagination->initialize($page);
-        //print_r($comment);
         
-        $html['comment'] = $comment['list'];
+        $html['comment'] = $comment;
         $html['pagination'] = $this->pagination->create_links();
         $this->load->view('admin/comment', $html);
     }
@@ -60,9 +59,11 @@ class Comment extends CI_Controller
         if (isset($post['ispass'])) {
             $post['ispass'] = $post['ispass'] ? 0 : 1;
         }
-        $this->Comment_mdl->update($post, $id);
-        $this->User_mdl->userlog_add('【评论】更新评论状态');
-        admintip('成功更新评论状态！');       
+        if ($this->Comment_mdl->update($post, $id)) {
+            $this->User_mdl->userlog_add('【评论】更新评论状态');
+            admintip('成功更新评论状态！');              
+        }
+        admintip('error:更新评论状态失败！');      
     }
 
     // ------------------------------------------------------------------------

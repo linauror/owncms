@@ -35,7 +35,7 @@ class Media extends CI_Controller
         $page['per_page'] = 20;
         $this->pagination->initialize($page);
         
-        $html['media'] = $media['list'];
+        $html['media'] = $media;
         $html['pagination'] = $this->pagination->create_links(); 
         $this->load->view('admin/media', $html);
     }

@@ -11,6 +11,7 @@
                 <option value="<?php echo $key;?>" <?php echo $this->input->get('group') == $key ? 'selected' : '';?>><?php echo $value;?></option>
                 <?php } ?>
             </select>
+            共 <strong><?php echo $users['total']?></strong> 项 
             </th>
           </tr>
             <tr class="table_title">
@@ -27,8 +28,8 @@
         </thead>
         <tbody>
          <?php
-         if(count($users)){
-            foreach($users as $line){
+         if($users['total']){
+            foreach($users['list'] as $line){
          ?>
         <tr>
             <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['uid'];?>" /></td>

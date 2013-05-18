@@ -4,11 +4,12 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="11"><a href="?">所有文章</a> <a href="<?php echo site_url('admin/post/add?category='.$this->input->get('category'));?>">新增文章</a>&nbsp;&nbsp;&nbsp;  
+          <th colspan="11"><a href="?">所有文章</a> <a href="<?php echo site_url('admin/post/add?category='.$this->input->get('category'));?>">新增文章+</a>&nbsp;&nbsp;&nbsp;  
           <select name="category" onchange="selectGoUrl(this, 'value');">
             <option value="0" value="">查看所有分类目录</option>
             <?php rec_show($categorys, '<option value="{slug}"{selected}>{separator}{typename}</option>', 0, '', $category);?>
           </select>
+          共 <strong><?php echo $post['total']?></strong> 项
           </th>
         </tr>
       <tr class="table_title">
@@ -27,8 +28,8 @@
       </thead>
      <tbody>
      <?php
-     if(count($post)){
-        foreach($post as $line){
+     if($post['total']){
+        foreach($post['list'] as $line){
      ?>
         <tr>
           <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['id'];?>" /></td>

@@ -34,7 +34,7 @@ class User extends CI_Controller
         $this->pagination->initialize($page);
          
         $html['pagination'] = $this->pagination->create_links(); 
-        $html['users'] = $users['list'];
+        $html['users'] = $users;
         $html['group'] = $this->User_mdl->group;
         $this->load->view('admin/user', $html);
     }
