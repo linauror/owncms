@@ -4,7 +4,7 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="9">友情链接 <a href="<?php echo site_url('admin/friendlink/add');?>">新增友情链接</a></th>
+          <th colspan="9">友情链接 <a href="<?php echo site_url('admin/friendlink/add');?>">新增友情链接+</a></th>
         </tr>
       <tr class="table_title">
         <td width="3%"><input type="checkbox" title="全选" /></td>
