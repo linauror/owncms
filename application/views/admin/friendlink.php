@@ -4,7 +4,7 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="9">友情链接 <a href="<?php echo site_url('admin/friendlink/add');?>">新增友情链接+</a></th>
+          <th colspan="9">友情链接 <a href="<?php echo site_url('admin/friendlink/add');?>">新增友情链接+</a> 共 <strong><?php echo $friendlink['total']?></strong> 项 </th>
         </tr>
       <tr class="table_title">
         <td width="3%"><input type="checkbox" title="全选" /></td>
@@ -18,11 +18,11 @@
       </thead>
      <tbody>
      <?php
-     if(count($friendlink)){
-        foreach($friendlink as $line){
+     if($friendlink['total']){
+        foreach($friendlink['list'] as $line){
      ?>
         <tr>
-          <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['id'];?>"></td>
+          <td><input type="checkbox" name="id[]" class="checkbox" value="<?php echo $line['id'];?>" /></td>
           <td><?php echo $line['id'];?></td>
           <td><a href="<?php echo site_url('admin/friendlink/edit/'.$line['id']);?>" title="<?php echo $line['title']; ?>"><?php echo $line['title']; ?></a> <?php echo $line['ishidden'] ? '<span class="red">[隐]</span>' : ''; ?> </td>
           <td><?php echo $line['dec'];?></td>
@@ -37,8 +37,9 @@
       </tbody>
       <tfoot>
         <tr>
-          <td colspan="9"><input type="submit" value="删除所选" class="roundbtn"></td>
+          <td colspan="9"><input type="submit" value="删除所选" class="roundbtn" /></td>
         </tr>
+        <tr><td colspan="11" class="pages"><?php echo $pagination;?></td></tr>
       </tfoot>
     </table>
 </form>

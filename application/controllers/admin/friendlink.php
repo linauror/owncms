@@ -18,8 +18,19 @@ class Friendlink extends CI_Controller
 
     public function index()
     {
-        $friendlink = $this->Friendlink_mdl->get_list();
+        $http_query = $this->input->get();        
+        $friendlink = $this->Friendlink_mdl->get_list($http_query);
+    
+        //分页
+        $this->load->library('pagination');
+        unset($http_query['page']);
+        $page['base_url'] = '?'.($http_query ? http_build_query($http_query) : '');
+        $page['total_rows'] = $friendlink['total'];
+        $page['per_page'] = 20;
+        $this->pagination->initialize($page);
+
         $html['friendlink'] = $friendlink;
+        $html['pagination'] = $this->pagination->create_links(); 
         $this->load->view('admin/friendlink', $html);
     }
 

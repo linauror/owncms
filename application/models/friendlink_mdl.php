@@ -31,7 +31,8 @@ class Friendlink_mdl extends CI_Model
     
     /**
      * Friendlink_mdl::get_list()
-     *  获取所有友情链接
+     * 获取所有友情链接
+     * @param mixed $array
      * @return
      */
     public function get_list($array = array()) 
@@ -40,14 +41,42 @@ class Friendlink_mdl extends CI_Model
 
         //ishidden
         if (isset($array['ishidden'])) {
-            $this->db->where('ishidden', $array['ishidden']);
+            $sql[] = 'ishidden = '.$array['ishidden'];
         }        
+
+        //select
+        $select = isset($array['select']) ? $array['select'] : '*';
         
+        //page
+        $page = isset($array['page']) ? $array['page'] : 1;
+        
+        //limit
+        $limit = isset($array['limit']) ? $array['limit'] : 20;
+        
+        //offset
+        $offset = ($page - 1) * $limit;
+                
         //orderby
         $orderby = isset($array['orderby']) ? $array['orderby'] : 'sortrank DESC, id DESC'; 
+        
+        //onlylist
+        if (!isset($array['onlylist'])) {
+            //计算总数
+            $this->db->select('id');
+            isset($sql) && $this->db->where(implode(' AND ', $sql));
+            $return['total'] = $this->db->get(self::TABLE)->num_rows();            
+        }
+        
+        //输出列表
+        $this->db->select($select);
+        $this->db->from(self::TABLE);
+        $this->db->limit($limit, $offset);
         $this->db->order_by($orderby);
-              
-        return $this->db->get(self::TABLE)->result_array();
+        isset($sql) && $this->db->where(implode(' AND ', $sql));
+        
+        $return['list'] = $this->db->get()->result_array();
+        
+        return $return;
     }
 
     // ------------------------------------------------------------------------
