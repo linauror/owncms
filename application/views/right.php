@@ -22,7 +22,7 @@
     <div class="widget">
     <h3>友情链接</h3>
         <ul>
-        <?php foreach ($friendlink as $line) {?>
+        <?php foreach ($friendlink['list'] as $line) {?>
             <li><a href="<?php echo $line['url']?>" title="<?php echo $line['dec'];?>" target="_blank"><?php echo $line['title'];?></a></li>
         <?php } ?>
         </ul>
