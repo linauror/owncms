@@ -183,7 +183,7 @@ class User_mdl extends CI_Model
         if (!preg_match('/^[\w]+$/', $post['username'])) return -2; //用户名格式不正确
         if (!preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail'])) return -3; //邮箱格式不正确
         if (isset($post['password']) && $post['password'] == '') unset($post['password']);
-        if (isset($post['password']) && strlen($post['password']) < 6 || strlen($post['password']) > 20) return -4; //密码长度不符
+        if (isset($post['password']) && (strlen($post['password']) < 6 || strlen($post['password']) > 20)) return -4; //密码长度不符
         
         $this->db->where_not_in('uid', $id);
         $this->db->where('username', $post['username']);
