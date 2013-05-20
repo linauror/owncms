@@ -121,7 +121,7 @@ class User_mdl extends CI_Model
         if (strlen($post['username']) < 4 || strlen($post['username']) > 20) return -1; //用户名长度不符
         if (!preg_match('/^[\w]+$/', $post['username'])) return -2; //用户名格式不正确
         if (!preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail'])) return -3; //邮箱格式不正确
-        if (strlen($post['password']) < 6 || strlen($post['username']) > 20) return -4; //密码长度不符
+        if (strlen($post['password']) < 6 || strlen($post['password']) > 20) return -4; //密码长度不符
         
         if ($this->checkuser('username', $post['username'])) return -5; //用户名已经存在
         if ($this->checkuser('usermail', $post['usermail'])) return -6; //用户邮箱已经存在
