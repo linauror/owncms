@@ -49,6 +49,10 @@ class Post extends CI_Controller
     public function ACT_comment_submit()
     {
         $post = $this->input->post();
+        $now = mktime();
+        if ($post['notRobot'] < $now - 600 || $post['notRobot'] > $now + 600) {
+            show_error('你这货不会是机器人吧！');
+        }
         $thepost = $this->Post_mdl->get('id', $post['pid'], 'id', array('ishidden' => '0', 'comment_status' => 1));
         if (!$thepost) {show_error('不允许评论的文章！');}
         $current_url = $post['current_url'];
