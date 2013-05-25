@@ -14,7 +14,7 @@ $(function(){
         $(this).hide('normal');
     })
     
-    $.post(base_url+'uapi/checklogin', {uid : uid}, function(data){
+    $.post(base_url+'uapi/checklogin', function(data){
         if (data) {
             html = '';
             data = eval('(' + data + ')');
