@@ -40,20 +40,48 @@
                 <input type="hidden" name="current_url" value="<?php echo current_url();?>" />
                 <input type="hidden" name="pid" value="<?php echo $post['id'];?>" />
                 <input type="hidden" name="reid" value="0" class="reid" />
-                <?php echo $this->User_mdl->uid ? '<p class="logged">以 '.$this->User_mdl->username.' 的身份登录。<a href="'.site_url('admin/login/loginout?refer='.current_url()).'" title="登出此账户">登出？</a></p><div style="display:none;">' : '';?>
+                <div>
                 <p>电子邮件地址不会被公开。 必填项已用 <span class="required">*</span> 标注</p>
                 <p>姓名 <span class="required">*</span></p>
-                <p><input type="text" name="username" class="username" value="<?php echo $this->User_mdl->username;?>" /></p>
+                <p><input type="text" name="username" class="username" value="" /></p>
                 <p>电子邮件 <span class="required">*</span></p>
-                <p><input type="text" name="usermail" class="usermail" value="<?php echo $this->User_mdl->usermail;?>" /></p>
+                <p><input type="text" name="usermail" class="usermail" value="" /></p>
                 <p>站点</p>
-                <p><input type="text" name="userurl" value="<?php echo $this->User_mdl->get('userurl', $this->User_mdl->uid);?>" /></p>
-                <?php echo $this->User_mdl->uid ? '</div>' : ''; ?>
+                <p><input type="text" name="userurl" value="" /></p>
+                </div>
                 <p>评论 <span class="required">*</span></p>
                 <p><textarea name="content" cols="10" rows="10" class="content"></textarea></p>
-                <p><input type="submit" value="发表评论" class="comment_submit" /></p>
+                <p><input type="button" value="我不是机器人啦" title="点击证明你不是机器人" name="notRobot" class="notRobot" time="" /> <input type="submit" value="发表评论" class="comment_submit" /></p>
             </form>
             <script type="text/javascript">
+            //已经登录
+            $(function(){
+                var timestamp = parseInt(Date.parse(new Date())) / 1000; 
+                $('#respond .notRobot').attr('time', timestamp);
+                $.post(base_url+'uapi/checklogin', function(data){
+                    if (data) {
+                        logged = '';
+                        data = eval('(' + data + ')');
+                        logged += '<p class="logged">以 '+ data.username +' 的身份登录。<a href="'+base_url+'login/loginout?refer='+current_url+'" title="登出此账户">登出？</a></p>';
+                        $('#respond .reid').after(logged);
+                        $('#respond .username').val(data.username);
+                        $('#respond .usermail').val(data.usermail);
+                        $('#respond .userurl').val(data.userurl);
+                        $('#respond .logged').next('div').hide();
+                        $('#respond .notRobot').val($('#respond .notRobot').attr('time'));
+                        $('#respond .notRobot').hide();
+                    }
+                })                 
+            })
+            
+            //我不是机器人啦
+            $('#respond .notRobot').click(function(){
+                $(this).val('OK!').fadeOut();
+                setTimeout(function(){
+                    $('#respond .notRobot').val($('#respond .notRobot').attr('time'));
+                }, 1000);
+            })
+            
             //检查提交表单
             function check_comment_submit() {
                 if ($('#respond .username').val().length < 1) {
@@ -68,6 +96,10 @@
                     alert('评论内容不能为空，请填写！');
                     $('#respond .content').focus();
                     return false;                      
+                } else if ($('.notRobot').val().length < 10) {
+                    alert('请确定你不是机器人，请点击《我不是机器人啦》！');
+                    $('#respond .notRobot').focus();
+                    return false;                        
                 }
             }
             
