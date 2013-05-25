@@ -4,7 +4,7 @@
     <table class="table fileslist">
       <thead>
         <tr>
-          <th colspan="9">单页文档 <a href="<?php echo site_url('admin/page/add');?>">新增单页文档+1</a></th>
+          <th colspan="9">单页文档 <a href="<?php echo site_url('admin/page/add');?>">新增单页文档+</a></th>
         </tr>
       <tr class="table_title">
         <td width="3%"><input type="checkbox" title="全选" /></td>
