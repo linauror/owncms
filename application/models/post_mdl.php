@@ -182,7 +182,6 @@ class Post_mdl extends CI_Model
      */
     public function update($post, $id, $where = array()) 
     {
-        clear_this_cache($id);
         $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
         $post['modifytime'] = date('Y-m-d H:i:s');
         $post['tag'] = $this->_add_tag($post['tag']);
@@ -207,9 +206,6 @@ class Post_mdl extends CI_Model
             $this->db->where_in('id', $id);
             count($where) && $this->db->where($where);
             $posts = $this->db->select('slug,category')->get(self::TABLE)->result_array();
-            foreach ($posts as $line) {
-                clear_this_cache($id); //删除缓存
-            }
             $this->db->where_in('pid', $id)->delete(self::TABLE_COMMENT); //删除文章评论
             $this->db->where_in('id', $id);
             count($where) && $this->db->where($where);
@@ -217,7 +213,6 @@ class Post_mdl extends CI_Model
             return $this->db->affected_rows();
         }
         $data = $this->get('title,slug', $id);
-        clear_this_cache($id); //删除缓存
         $this->db->delete(self::TABLE_COMMENT, array('pid' => $id)); //删除文章评论
         $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;

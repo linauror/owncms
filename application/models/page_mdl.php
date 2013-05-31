@@ -109,7 +109,6 @@ class Page_mdl extends CI_Model
         $this->db->where('slug', $post['slug']);
         $check = $this->db->get(self::TABLE)->num_rows();
         if (!$check) {
-            clear_this_cache($post['slug'], 'page');
             $post['modifytime'] = date('Y-m-d H:i:s');
             if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
                 return $this->db->affected_rows();
@@ -134,14 +133,10 @@ class Page_mdl extends CI_Model
             $this->db->where_in('id', $id);
             count($where) && $this->db->where($where);
             $pages = $this->db->select('slug')->get(self::TABLE)->result_array();
-            foreach ($pages as $line) {
-                clear_this_cache($line['slug'], 'page');
-            }
             $this->db->delete(self::TABLE);
             return $this->db->affected_rows();
         }
         $data = $this->get('title,slug', $id);
-        clear_this_cache($data['slug'], 'page');
         $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return $data;
     }

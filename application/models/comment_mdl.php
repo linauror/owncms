@@ -129,7 +129,6 @@ class Comment_mdl extends CI_Model
         if (strlen($post['username']) < 1 || !preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail']) || strlen($post['content']) < 1) {
             return false;
         }
-        clear_this_cache($post['pid']);
         if ($this->db->insert(self::TABLE, $post)) {
             $insert_id = $this->db->insert_id();
             $this->db->set('comment_count', 'comment_count + 1', false)->where('id', $post['pid'])->update(self::TABLE_POST);
@@ -199,7 +198,6 @@ class Comment_mdl extends CI_Model
             }
             $pids = array_count_values($pids);            
             foreach ($pids as $key => $value) {
-                clear_this_cache($key);
                 $this->db->set('comment_count', 'comment_count - '.$value, false)->where('id', $key)->update(self::TABLE_POST);
             }
             $this->db->where_in('id', $id);
@@ -208,7 +206,6 @@ class Comment_mdl extends CI_Model
             return $this->db->affected_rows();
         }
         $this->db->set('comment_count', 'comment_count - 1', false)->where('id', $this->get('pid', $id))->update(self::TABLE_POST);
-        clear_this_cache($this->get('pid', $id));
         $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
         return true;
     }

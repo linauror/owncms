@@ -36,33 +36,6 @@ if (!function_exists('getParCategory'))
 
 // --------------------------------------------------------------------
 
-if (!function_exists('clear_this_cache'))
-{
-    /**
-     * clear_this_cache()
-     * 删除特定缓存
-     * @param mixed $slug
-     * @param string $type
-     * @return void
-     */
-    function clear_this_cache($slug, $type = 'post')
-    {
-        $CI = &get_instance();
-        if ($type == 'post') {
-            $CI->load->model('Post_mdl');
-            $CI->load->model('Category_mdl');
-            $post = $CI->Post_mdl->get('category,slug', $slug);
-            $uri_string = $CI->Category_mdl->get('channeltype', $post['category']).'/'.$slug.($post['slug'] ? '/'.$post['slug'] : '');
-        } elseif ($type == 'page') {
-            $CI->load->model('Page_mdl');
-            $uri_string = 'page/'.(is_numeric($slug) ? $CI->Page_mdl->get('slug', $slug) : $slug);
-        }
-        config_item('cache_time') && unlink(getcwd().'/'.config_item('cache_path').md5(config_item('base_url').config_item('index_page').$uri_string));
-    }
-}
-
-// --------------------------------------------------------------------
-
 if (!function_exists('show_menu_nav'))
 {
     /**
