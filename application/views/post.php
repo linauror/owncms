@@ -51,7 +51,7 @@
                 </div>
                 <p>评论 <span class="required">*</span></p>
                 <p><textarea name="content" cols="10" rows="10" class="content"></textarea></p>
-                <p><input type="button" value="我不是机器人啦" title="点击证明你不是机器人" name="notRobot" class="notRobot" time="" /> <input type="submit" value="发表评论" class="comment_submit" /></p>
+                <p><input type="button" value="我不是机器人啦" title="点击证明你不是机器人" class="notRobotBtn" /> <input type="hidden" class="notRobot" name="notRobot" value="" time="" /> <input type="submit" value="发表评论" class="comment_submit" /></p>
             </form>
             <script type="text/javascript">
             //已经登录
@@ -69,17 +69,17 @@
                         $('#respond .userurl').val(data.userurl);
                         $('#respond .logged').next('div').hide();
                         $('#respond .notRobot').val($('#respond .notRobot').attr('time'));
-                        $('#respond .notRobot').hide();
+                        $('#respond .notRobotBtn').hide();
                     }
                 })                 
             })
             
             //我不是机器人啦
-            $('#respond .notRobot').click(function(){
+            $('#respond .notRobotBtn').click(function(){
                 $(this).val('OK!').fadeOut();
                 setTimeout(function(){
                     $('#respond .notRobot').val($('#respond .notRobot').attr('time'));
-                }, 1000);
+                }, 200);
             })
             
             //检查提交表单
