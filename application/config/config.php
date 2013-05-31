@@ -363,9 +363,6 @@ $config['proxy_ips'] = '';
  */
 $config['userlogin_cookiename'] = 'userlogin'; //用户登录cookie名称
 $config['userlogin_expired'] = '86400'; //默认cookie失效时间
-
 $config['db_backup_path'] = 'application/logs/backup/'; //默认数据库备份地址
-
-$config['cache_time'] = 0; //默认文件缓存分钟 0表示不缓存
 /* End of file config.php */
 /* Location: ./application/config/config.php */

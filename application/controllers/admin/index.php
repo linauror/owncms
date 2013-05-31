@@ -26,18 +26,6 @@ class Index extends CI_Controller
     {
         $this->load->view('admin/index');
     }
-
-    // ------------------------------------------------------------------------
-
-    function clean_cache(){
-        $cache_path = getcwd().'/'.config_item('cache_path');
-        $files = glob($cache_path.'*');
-        foreach ($files as $line) {
-            unlink($line);
-        }
-        $this->User_mdl->userlog_add('【系统】删除文件缓存');
-        admintip('成功删除文件缓存！');
-    }
     
     // ------------------------------------------------------------------------
 }

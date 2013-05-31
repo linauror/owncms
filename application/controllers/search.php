@@ -44,7 +44,6 @@ class Search extends CI_Controller
         $html['post_hot'] = $this->Post_mdl->get_list(array('select' => 'id,category,title,slug,click,posttime', 'ishidden' => 0, 'limit' => 10, 'posttime' => true, 'orderby' => 'click DESC', 'onlylist' => true));
         $html['comments_new'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 10, 'onlylist' => true, 'onlylist' => true));
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));
-        $this->load->view('search', $html);
     } 
 }
 

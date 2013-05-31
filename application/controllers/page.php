@@ -36,7 +36,6 @@ class Page extends CI_Controller
         $html['comments_new'] = $this->Comment_mdl->get_list(array('ishidden' => 0, 'ispass' => 1, 'limit' => 10, 'onlylist' => true));
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));
         $this->load->view($page['template'], $html);
-        $this->output->cache(config_item('cache_time'));
     }
 }
 
