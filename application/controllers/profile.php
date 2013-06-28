@@ -39,7 +39,7 @@ class Profile extends CI_Controller
      */
     public function update()
     {
-        $post = $this->input->post();
+        $post = $this->input->post(null, true);
         if ($post) {
             $error = array(-1 => '账号长度不符', -2 => '账号格式不正确', -3 => '邮箱格式不正确', -4 => '密码长度不符', -5 => '用户名已经存在', -6 => '用户邮箱已经存在');
             $user['usermail'] = $post['usermail'];

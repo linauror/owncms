@@ -47,7 +47,7 @@ class Post extends CI_Controller
      */
     public function ACT_comment_submit()
     {
-        $post = $this->input->post();
+        $post = $this->input->post(null, true);
         $now = mktime();
         if ($post['notRobot'] < $now - 600 || $post['notRobot'] > $now + 600) {
             show_error('你这货不会是机器人吧！');
@@ -80,7 +80,7 @@ class Post extends CI_Controller
      */
     public function ACT_update_click()
     {
-        if ($this->input->post('id')) {
+        if ($this->input->post('id', true)) {
             $this->load->model('Post_mdl');
             $this->Post_mdl->update_field('click', $this->input->post('id')); //更新浏览量            
         }
@@ -95,7 +95,7 @@ class Post extends CI_Controller
     {
         $uid = $this->User_mdl->uid;
         if (!$uid) exit('{"status" : "no"}');
-        $get = $this->input->get();
+        $get = $this->input->get(null, true);
         $group = $this->User_mdl->get('group', $uid);
         $return['status'] = 'yes';
         if ($group < 3) {

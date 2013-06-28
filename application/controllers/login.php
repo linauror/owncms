@@ -17,7 +17,7 @@ class Login extends CI_Controller
     public function index()
     {
         if ($this->User_mdl->uid) redirect('profile');
-        $refer = $this->input->get('refer') ? $this->input->get('refer') : getrefer();
+        $refer = $this->input->get('refer', true) ? $this->input->get('refer', true) : getrefer();
         $html['refer'] = $refer;
         
         $this->load->model('Friendlink_mdl');
@@ -41,10 +41,10 @@ class Login extends CI_Controller
      */
     public function logining()
     {
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-        $expired = $this->input->post('expired');
-        $refer = $this->input->post('refer');
+        $username = $this->input->post('username', true);
+        $password = $this->input->post('password', true);
+        $expired = $this->input->post('expired', true);
+        $refer = $this->input->post('refer', true);
         $error = array(-1 => '用户被禁止', -2 => '密码错误', -3 => '用户不存在');
         if ($username && $password) {
             $login = $this->User_mdl->login($username, $password, $expired);
@@ -72,7 +72,7 @@ class Login extends CI_Controller
     public function register()
     {
         if ($this->User_mdl->uid) redirect('profile');
-        $post = $this->input->post();
+        $post = $this->input->post(null, true);
         if ($post) {
             $error = array(-1 => '账号长度不符', -2 => '账号格式不正确', -3 => '邮箱格式不正确', -4 => '密码长度不符', -5 => '用户名已经存在', -6 => '用户邮箱已经存在');
             $user['username'] = $post['username'];
@@ -108,7 +108,7 @@ class Login extends CI_Controller
      */
     public function verify()
     {
-        $data = $this->input->get();
+        $data = $this->input->get(null, true);
         $now = mktime();
         if ($now - $data['time'] > 600) {
             show_error('此链接已经过期！');
@@ -149,7 +149,7 @@ class Login extends CI_Controller
      */
     public function getpassword_submit()
     {
-        $username = $this->input->post('username');
+        $username = $this->input->post('username', true);
         if (strpos($username, '@')) {
             $user = $this->User_mdl->get('uid,usermail,username', $username, 'usermail');
         } else {
@@ -180,8 +180,8 @@ class Login extends CI_Controller
      */
     public function getpassword()
     {
-        $post = $this->input->post();
-        $data = $post ? $post : $this->input->get();
+        $post = $this->input->post(null, true);
+        $data = $post ? $post : $this->input->get(null, true);
         $now = mktime();
         if ($now - $data['time'] > 600) {
             show_error('此链接已经过期！');
@@ -219,7 +219,7 @@ class Login extends CI_Controller
     {
         $this->User_mdl->userlog_add('【用户】注销登录', 2);
         $this->User_mdl->loginout();
-        $refer = $this->input->get('refer');
+        $refer = $this->input->get('refer', true);
         redirect($refer ? $refer : 'login');
     } 
 }

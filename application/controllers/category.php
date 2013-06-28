@@ -25,7 +25,7 @@ class Category extends CI_Controller
         $this->load->model('Comment_mdl');
         
         $categorys= $this->Category_mdl->get_list();
-        $currpage = $this->input->get('page') ? $this->input->get('page') : 1;
+        $currpage = $this->input->get('page', true) ? $this->input->get('page', true) : 1;
         $this->load->library('pagination');
         $page['base_url'] = '?';
         $page['per_page'] = 20;
