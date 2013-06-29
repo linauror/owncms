@@ -57,12 +57,12 @@ class Post extends CI_Controller
         $current_url = $post['current_url'];
         if (count($post) < 7) show_error('请填写完整！');
         $comment = array(
-            'pid' => $post['pid'],
-            'reid' => $post['reid'],
-            'username' => $post['username'],
-            'usermail' => $post['usermail'],
-            'userurl' => $post['userurl'],
-            'content' => $post['content'],
+            'pid' => intval($post['pid']),
+            'reid' => intval($post['reid']),
+            'username' => strip_tags($post['username']),
+            'usermail' => strip_tags($post['usermail']),
+            'userurl' => strip_tags($post['userurl']),
+            'content' => strip_tags($post['content']),
         );
         $this->load->model('Comment_mdl');
         $comment = $this->Comment_mdl->add($comment);
@@ -82,7 +82,7 @@ class Post extends CI_Controller
     {
         if ($this->input->post('id', true)) {
             $this->load->model('Post_mdl');
-            $this->Post_mdl->update_field('click', $this->input->post('id')); //更新浏览量            
+            $this->Post_mdl->update_field('click', $this->input->post('id', true)); //更新浏览量            
         }
     }
     

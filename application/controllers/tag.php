@@ -17,7 +17,7 @@ class Tag extends CI_Controller
      */
     public function index($tag = '')
     {
-        $tag = urldecode($tag);        
+        $tag = strip_tags(urldecode($tag));        
         $tagid = $this->Post_mdl->get_tagid_by_tag($tag);
         if (!$tagid) show_error('此标签不存在');
         $this->load->vars(array('current_nav' => 'index'));
