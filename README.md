@@ -8,7 +8,7 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久
 
 [传送到官网](http://owncms.linauror.com/)
 
-![程序截图](http://www.linauror.com/wp-content/uploads/2013/04/20130424111232-1024x655.jpg)
+![程序截图](http://www.linauror.com/static/static/upload/201305/aa299900b080c3a180df99f1afeeb25d.jpg)
 
 ##安装
 
