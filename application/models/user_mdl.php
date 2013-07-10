@@ -291,7 +291,7 @@ class User_mdl extends CI_Model
             if ($user['password'] != md5($password.$user['salt'])) return array('errorcode' => -2, 'message' => '密码错误'); //密码错误
             if ($user['status'] == 0) return array('errorcode' => -1, 'message' => '用户被禁止'); // 用户被禁止
             $now = mktime();
-            $this->input->set_cookie($this->userlogin_cookiename, $this->encrypt->encode("$user[uid]\t$user[username]\t$user[usermail]\t$now\t$expired"), $expired);
+            $this->input->set_cookie($this->userlogin_cookiename, $this->encrypt->encode("$user[uid]\t$user[username]\t$user[password]\t$user[usermail]\t$now\t$expired"), $expired);
             $this->db->update(self::TABLE, array('logintime' => date('Y-m-d H:i:s'), 'loginip' => $this->input->ip_address(), 'logedtime' => $user['logintime'], 'logedip' => $user['loginip'], 'logincount' => $user['logincount'] + 1), array('uid' => $user['uid']));
             return array('errorcode' => 0, 'user' => $user);  //登录成功            
         } else {
@@ -355,12 +355,12 @@ class User_mdl extends CI_Model
             $this->load->library('encrypt');
             $u = $this->encrypt->decode($this->input->cookie($this->userlogin_cookiename));
             $user = explode("\t", $u);
-            if (count($user) == 5 && is_numeric($user[0]) && mktime() - $user[4] < $user[3]) {
-                $status = $this->get('status', $user[0]);
+            if (count($user) == 6 && is_numeric($user[0]) && mktime() - $user[5] < $user[4]) {
+                $status = $this->get('status', $user[0], 'uid', array('password' => $user[2]));
                 if (!$status) return false;
                 $this->uid = $user[0];
                 $this->username = $user[1];
-                $this->usermail = $user[2];
+                $this->usermail = $user[3];
                 
                 return true;
             }
