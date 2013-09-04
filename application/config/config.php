@@ -329,7 +329,7 @@ $config['compress_output'] = FALSE;
 |
 */
 $config['time_reference'] = 'local';
-
+$config['time_zone'] = date_default_timezone_set('Asia/shanghai');
 
 /*
 |--------------------------------------------------------------------------
