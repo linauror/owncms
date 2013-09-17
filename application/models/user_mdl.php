@@ -216,7 +216,7 @@ class User_mdl extends CI_Model
     public function del($id, $where = array()) 
     {
         if (is_array($id)) {
-            if (in_array($id, 1)) return false;
+            if (in_array(1, $id)) return false;
             $this->db->where_in('uid', $id);
             count($where) && $this->db->where($where);
             $this->db->delete(self::TABLE);
