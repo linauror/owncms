@@ -139,7 +139,7 @@ class Post_mdl extends CI_Model
         $post = array_diff($post, array(''));
         $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
         $post['uid'] = $this->User_mdl->uid;
-        $post['tag'] = $this->_add_tag($post['tag']);
+        $post['tag'] = isset($post['tag']) ? $this->_add_tag($post['tag']) : '';
         if ($this->db->insert(self::TABLE, $post)) {
             return $this->db->insert_id();
         }
