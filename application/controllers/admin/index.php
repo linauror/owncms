@@ -35,6 +35,14 @@ class Index extends CI_Controller
      * @return void
      */
     public function update() {
+        $this->db->query("CREATE TABLE `relation` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `key` int(10) NOT NULL DEFAULT '0',
+  `value` int(10) NOT NULL DEFAULT '0',
+  `type` char(2) NOT NULL DEFAULT '0' COMMENT 'pt:文章对应标签',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='关系表';");
+        
         $this->db->select('id,tag');
         $posts = $this->db->get('post')->result_array();
         $insert = array();
