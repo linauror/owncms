@@ -291,7 +291,32 @@ if (!function_exists('sendmail'))
 
 // --------------------------------------------------------------------
 
-
+if (!function_exists('getSubByKey'))
+{
+    /**
+     * getSubByKey()
+     * 通过主键获取一个数组
+     * @param mixed $pArray
+     * @param string $pKey
+     * @param string $pCondition
+     * @return
+     */
+    function getSubByKey($pArray, $pKey = "", $pCondition = "") {
+    	$result = array();
+    	if (!$pArray) {
+    		return $result;
+    	}
+    	foreach ($pArray as $tempArray) {
+    		if (is_object($tempArray)) {
+    			$tempArray = (array)$tempArray;
+    		}
+    		if (("" != $pCondition && $tempArray[$pCondition[0]] == $pCondition[1]) || "" == $pCondition) {
+    			$result[] = ("" == $pKey) ? $tempArray : isset($tempArray[$pKey]) ? $tempArray[$pKey] : "";
+    		}
+    	}
+    	return $result;
+    }
+}
 
 /* End of file common_helper.php */
 /* Location: ./application/helpers/common_helper.php */

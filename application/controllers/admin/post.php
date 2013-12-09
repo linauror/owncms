@@ -39,11 +39,7 @@ class Post extends CI_Controller
         $categorys = $this->Category_mdl->get_list();
         
         //标签
-        $tags = array();
-        foreach ($post['list'] as $line) {
-            $tags[] = $line['tag'];
-        }
-        $tags = $this->Post_mdl->get_taglist_by_tagids(array_unique(explode(',', str_replace(',,', ',', implode('', $tags)))));        
+        $tags = $this->Post_mdl->get_tags_by_posts(getSubByKey($post['list'], 'id'));     
         
         $html['categorys'] = $categorys;
         $html['category'] = $this->input->get('category') ? get_from_array($categorys, 'slug', $this->input->get('category'), 'id') : 0;
@@ -52,7 +48,11 @@ class Post extends CI_Controller
         $html['tags'] = $tags;
         $this->load->view('admin/post', $html);
     }
-
+    
+    public function get_hot_tag() {
+        $this->Post_mdl->get_hot_tag();
+    }
+    
     // ------------------------------------------------------------------------
 
     /**

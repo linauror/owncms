@@ -19,6 +19,7 @@ class Post_mdl extends CI_Model
     const TABLE_TAG = 'tag';
     const TABLE_CATEGORY = 'category';
     const TABLE_COMMENT = 'comment';
+    const TABLE_RELATION = 'relation';
     
     public $templates = array('post' => '默认[post]');
     
@@ -51,9 +52,11 @@ class Post_mdl extends CI_Model
         }
         
         //tag
+        $tag_join = $tag_where = array();
         if (isset($array['tag'])) {
             $tagid = is_numeric($array['tag']) ? $array['tag'] : $this->get_tagid_by_tag($array['tag']);
-            $sql[] = self::TABLE.'.tag LIKE \'%,'.$tagid.',%\'';
+            $tag_join = array(self::TABLE_RELATION, self::TABLE . '.id=' . self::TABLE_RELATION . '.key', 'left');
+            $tag_where = array(self::TABLE_RELATION . '.value' => $tagid, self::TABLE_RELATION . '.type' => 'pt');
         }
         
         //uid
@@ -107,7 +110,11 @@ class Post_mdl extends CI_Model
         //onlylist
         if (!isset($array['onlylist'])) {
             //计算总数
-            $this->db->select('id');
+            $this->db->select(self::TABLE . '.id');
+            if ($tag_join) {
+                $this->db->join($tag_join[0], $tag_join[1], $tag_join[2]); 
+                $this->db->where($tag_where);
+            }
             isset($sql) && $this->db->where(implode(' AND ', $sql));
             $return['total'] = $this->db->get(self::TABLE)->num_rows();            
         }
@@ -120,6 +127,10 @@ class Post_mdl extends CI_Model
         $this->db->limit($limit, $offset);
         $this->db->order_by($orderby);
         isset($sql) && $this->db->where(implode(' AND ', $sql));
+        if ($tag_join) {
+            $this->db->join($tag_join[0], $tag_join[1], $tag_join[2]); 
+            $this->db->where($tag_where);
+        }
         
         $return['list'] = $this->db->get()->result_array();
         
@@ -139,9 +150,11 @@ class Post_mdl extends CI_Model
         $post = array_diff($post, array(''));
         $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
         $post['uid'] = $this->User_mdl->uid;
-        $post['tag'] = isset($post['tag']) ? $this->_add_tag($post['tag']) : '';
+        $post['tag'] = isset($post['tag']) ? implode(',', $this->_add_tag($post['tag'])) : '';
         if ($this->db->insert(self::TABLE, $post)) {
-            return $this->db->insert_id();
+            $inserId = $this->db->insert_id();
+            $post['tag'] ? $this->addRelation($inserId, $post['tag']) : '';
+            return $inserId;
         }
         return false;
     }
@@ -183,10 +196,12 @@ class Post_mdl extends CI_Model
     public function update($post, $id, $where = array()) 
     {
         $post['flag'] = isset($post['flag']) ? implode(',', $post['flag']) : '';
+        $post['tag'] = isset($post['tag']) ? implode(',', $this->_add_tag($post['tag'])) : '';
         $post['modifytime'] = date('Y-m-d H:i:s');
-        $post['tag'] = $this->_add_tag($post['tag']);
         if ($this->db->update(self::TABLE, $post, array_merge(array('id' => $id), $where))) {
-            return $this->db->affected_rows();
+            $affected_rows = $this->db->affected_rows();
+            $post['tag'] ? $this->updateRelation($id, $post['tag']) : '';
+            return $affected_rows;
         }
         return false; 
     }
@@ -215,6 +230,7 @@ class Post_mdl extends CI_Model
         $data = $this->get('title,slug', $id);
         $this->db->delete(self::TABLE_COMMENT, array('pid' => $id)); //删除文章评论
         $this->db->delete(self::TABLE, array_merge(array('id' => $id), $where));
+        $this->DelRelation($id); // 删除关系表数据
         return $data;
     }
     
@@ -269,7 +285,24 @@ class Post_mdl extends CI_Model
     }
     
     // ------------------------------------------------------------------------
-    
+    /**
+     * Post_mdl::get_tags_by_posts()
+     * 通过文章ID获取标签信息
+     * @param mixed $postIds
+     * @return void
+     */
+    public function get_tags_by_posts($postIds = array()) {
+        if (is_array($postIds)) {
+            $ids = implode(',', $postIds);
+        }
+        $tagids = $this->getRelation($ids);
+        if ($tagids) {
+            return $this->get_taglist_by_tagids($tagids);
+        }
+        return false;
+    }
+
+    // ------------------------------------------------------------------------    
     /**
      * Post_mdl::_addtag()
      * 添加标签，并返回数组
@@ -286,14 +319,11 @@ class Post_mdl extends CI_Model
             $tags = array_filter($tags);
             $tags = array_unique($tags);
             
+            $tags = array_map(function($v){return strtolower($v);}, $tags);
+            
             $this->db->where_in('tag', $tags);
             $have = $this->db->get(self::TABLE_TAG)->result_array();
-            $haved = array();
-            if ($have) {
-                foreach ($have as $line) {
-                    $haved[] = $line['tag'];
-                }
-            }
+            $haved = getSubByKey($have, 'tag');
             
             $left = array_diff($tags, $haved);
             if (count($left)) {
@@ -304,10 +334,7 @@ class Post_mdl extends CI_Model
             
             $this->db->where_in('tag', $tags);
             $query = $this->db->get(self::TABLE_TAG)->result_array();
-            foreach ($query as $line) {
-                $return[] = $line['id'];
-            }
-            return ','.implode(',', $return).',';
+            return getSubByKey($query, 'id');
         }
         return '';
     }
@@ -342,14 +369,12 @@ class Post_mdl extends CI_Model
         
         //计算总数
         $this->db->select('id');
-        isset($sql) && $this->db->where(implode(' AND ', $sql));
         $return['total'] = $this->db->get(self::TABLE_TAG)->num_rows();
         
         //输出列表
         $this->db->select($select);
         $this->db->limit($limit, $offset);
         $this->db->order_by($orderby);
-        isset($sql) && $this->db->where(implode(' AND ', $sql));
         
         $return['list'] = $this->db->get(self::TABLE_TAG)->result_array();
         
@@ -393,38 +418,126 @@ class Post_mdl extends CI_Model
         return $result ? $result['id'] : false;
     } 
     
+    // ------------------------------------------------------------------------    
+    
     /**
      * Post_mdl::get_tag_list()
      * 获取热门标签
      * @param integer $limit
      * @return void
      */
-    public function get_hot_tag($limit = 10){
-        $posts = $this->get_list(array('select' => 'tag', 'limit' => '10000'));
-        $a = '';
-        $b = $c = $d = array();
-        if (count($posts)) {
-            foreach ($posts['list'] as $line) {
-                if ($line['tag'] != '') {
-                    $a .= $line['tag'];
-                }
-            }
-            $a = str_replace(',,', ',', $a);
-            $b = array_filter(explode(',', $a));
-            $b = array_count_values($b);
-            arsort($b);
-            $b = array_slice($b, 0, $limit, true);
-            $c = array_keys($b);
-            $tags = $this->get_taglist_by_tagids($c);
-            foreach ($b as $key => $value) {
-                $d[] = array('id' => $key, 'total' => $value, 'tag' => $tags[$key]['tag']);
-            }
-            return $d;
+    public function get_hot_tag($limit = 10)
+    {   
+        $tags = $this->db->query('SELECT `value`, COUNT(`value`) AS `total` FROM ' . self::TABLE_RELATION . ' WHERE `type` = \'pt\' GROUP BY `value` ORDER BY `total` DESC LIMIT ' . $limit)->result_array();
+        if ($tags) {
+            return $this->get_taglist_by_tagids(getSubByKey($tags, 'value'));
         }
         return array();
-        
-    }       
+    }
     
+    // ------------------------------------------------------------------------ 
+    
+    /**
+     * Post_mdl::getRelation()
+     * 通过关系表或者值
+     * @param integer $id
+     * @param string $col
+     * @param string $type
+     * @return
+     */
+    public function getRelation($id = array(), $col = 'key', $type = 'pt') {
+        if (! is_array($id)) {
+            $id = explode(',', $id);
+        }
+        $this->db->where_in($col, $id);
+        $relation = $this->db->get_where(self::TABLE_RELATION, array('type' => $type))->result_array();
+        if ($relation) {
+            return getSubByKey($relation, $col == 'key' ? 'value' : 'key');
+        }
+        return false;
+    }
+      
+    // ------------------------------------------------------------------------ 
+    
+    /**
+     * Post_mdl::addRelation()
+     * 插入关系表
+     * @param integer $keyId
+     * @param mixed $valueIds
+     * @param string $type
+     * @return
+     */
+    public function addRelation($keyId = 0, $valueIds = array(), $type = 'pt') 
+    {
+        if (! $keyId || ! $valueIds || ! $type) {
+            return false;
+        }
+      
+        if (! is_array($valueIds)) {
+            $valueIds = explode(',', $valueIds);
+        }
+
+        $data = array();
+        foreach ($valueIds as $key => $value) {
+            $data[$key]['key'] = $keyId;
+            $data[$key]['value'] = $value;
+            $data[$key]['type'] = $type;
+        }
+        
+        $this->db->insert_batch(self::TABLE_RELATION, $data);
+    }
+
+	/**
+	 * Post_mdl::updateRelation()
+	 * 关系表更新
+	 * @param integer $keyId
+	 * @param mixed $valueIds
+	 * @param string $type
+	 * @return
+	 */
+	public function updateRelation($keyId = 0, $valueIds = array(), $type = 'pt') 
+    {
+        if (! $keyId || ! $valueIds || ! $type) {
+            return false;
+        }
+
+        if (! is_array($valueIds)) {
+            $valueIds = explode(',', $valueIds);
+        }        
+        
+		$agoIdsArr = $this->db->get_where(self::TABLE_RELATION, array('key' => $keyId, 'type' => $type))->result_array();
+		$agoIds = getSubByKey($agoIdsArr, 'value');
+
+        // 删除多余的
+		$diffArr1 = array_diff($agoIds, $valueIds);
+		if ($diffArr1) {
+			$this->db->where(array('key' => $id, 'type' => $type));
+			$this->db->where_in('value', $diffArr1);
+			$this->db->delete(self::TABLE_RELATION);
+		}
+        
+		//增加新的
+		$diffArr2 = array_diff($valueIds, $agoIds);
+		if ($diffArr2) {
+            $this->addRelation($keyId, $diffArr2, $type);
+		}
+        
+        return true;
+	}       
+    
+    /**
+     * Post_mdl::DelRelation()
+     * 删除关联关系
+     * @param integer $id
+     * @param string $col
+     * @param string $type
+     * @return void
+     */
+    public function DelRelation($id = 0, $col = 'key', $type = 'pt') {
+        $this->db->where(array($col => $id, 'type' => $type));
+        $this->db->delete(self::TABLE_RELATION);
+        return $this->db->affected_rows();
+    }
 
 }
 

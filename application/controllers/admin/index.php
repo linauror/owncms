@@ -28,6 +28,29 @@ class Index extends CI_Controller
     }
     
     // ------------------------------------------------------------------------
+    
+    /**
+     * Index::update()
+     * 系统升级 20131209文章对应标签转移到关系表
+     * @return void
+     */
+    public function update() {
+        $this->db->select('id,tag');
+        $posts = $this->db->get('post')->result_array();
+        $insert = array();
+        foreach ($posts as $key => $line) {
+            $tags = array();
+            if ($line['tag']) {
+                $tags = explode(',', $line['tag']);
+                $tags = array_diff($tags, array(''));
+                foreach ($tags as $keyA => $lineA) {
+                    $insert[$key . $keyA] = array('key' => $line['id'], 'value' => $lineA, 'type' => 'pt');
+                }
+            }
+        }
+        $this->db->insert_batch('relation', $insert);
+        echo '升级完成，可删除此段！';
+    }
 }
 
 /* End of file index.php */

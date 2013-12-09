@@ -237,4 +237,18 @@ CREATE TABLE `userlog` (
   PRIMARY KEY (`id`,`uid`)
 ) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='操作日志';
 
+#
+# TABLE STRUCTURE FOR: relation
+#
+
+DROP TABLE IF EXISTS relation;
+
+CREATE TABLE `relation` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `key` int(10) NOT NULL DEFAULT '0',
+  `value` int(10) NOT NULL DEFAULT '0',
+  `type` char(2) NOT NULL DEFAULT '0' COMMENT 'pt:文章对应标签',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='关系表';
+
 
