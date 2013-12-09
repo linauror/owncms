@@ -16,7 +16,7 @@ class Search extends CI_Controller
      */
     public function index()
     {   
-        $q = strip_tags($this->input->get('q', true));
+        $q = htmlspecialchars(strip_tags($this->input->get('q', true)), ENT_QUOTES);
         if (!$q) show_error('请输入关键词！');      
         $this->load->vars(array('current_nav' => 'index'));
         
