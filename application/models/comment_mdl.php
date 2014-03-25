@@ -126,12 +126,27 @@ class Comment_mdl extends CI_Model
         $post['content'] = htmlspecialchars($post['content']);
         $post['username'] = htmlspecialchars($post['username']);
         $post['userurl'] = isset($post['userurl']) ? htmlspecialchars($post['userurl']) : '';
+        $post['pid'] = (int) $post['pid'];
+        $post['reid'] = (int) $post['reid'];
         if (strlen($post['username']) < 1 || !preg_match('/^[\w]+@[a-zA-Z0-9]+.+[a-zA-Z]$/', $post['usermail']) || strlen($post['content']) < 1) {
             return false;
         }
         if ($this->db->insert(self::TABLE, $post)) {
             $insert_id = $this->db->insert_id();
             $this->db->set('comment_count', 'comment_count + 1', false)->where('id', $post['pid'])->update(self::TABLE_POST);
+            
+            /* 是否发送提醒 */
+            if ($post['reid']) {
+                $this->load->model('Post_mdl');
+                $title = $this->Post_mdl->get('title', $post['pid']);
+                $comments = $this->db->query('SELECT usermail,username,tipme,id FROM ' . self::TABLE . ' WHERE ishidden = 0 AND ispass = 1 AND id <> ' . $insert_id .' AND usermail <> \'' . $post['usermail'] . '\' AND pid = ' . $post['pid'] . ' AND (reid = ' . $post['reid'] . ' OR id = ' . $post['reid'] . ') GROUP BY usermail')->result_array();
+                if (count($comments)) {
+                    foreach ($comments as $line) {
+                        sendmail($line['usermail'], '您有新的评论回复', $post['username'] . '，你好，你在《' . $title . '》中有了新的评论回复，<a href="' . site_url('post/' . $post['pid']) . '#comments_id_' . $insert_id . '">点击查看</a>');
+                    }
+                }                
+            }
+            
             return $insert_id;
         }
         return false;
