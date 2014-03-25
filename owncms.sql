@@ -33,6 +33,7 @@ CREATE TABLE `comment` (
   `username` varchar(50) NOT NULL COMMENT '姓名',
   `usermail` varchar(30) NOT NULL COMMENT '邮件地址',
   `userurl` varchar(50) NOT NULL DEFAULT '' COMMENT '链接地址',
+  `tipme` tinyint(1) NOT NULL DEFAULT '0' COMMENT '回复是否通知我',
   `content` text NOT NULL COMMENT '留言内容',
   `posttime` datetime NOT NULL COMMENT '评论时间',
   `ip` char(20) NOT NULL COMMENT 'IP地址',
