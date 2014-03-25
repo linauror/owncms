@@ -104,7 +104,7 @@ if (!function_exists('show_comments_list'))
         foreach ($array as $line) {
             if ($line['reid'] == $reid) {
                 $html .= '<li id="comments_id_'.$line['id'].'"><div class="comment_wrap"><div class="comment_meta"><img src="http://www.gravatar.com/avatar/'.md5(strtolower($line['usermail'])).'?s=44" class="avatar" />';
-                $html .= '<p class="username">'.($line['reid'] == 0 ? '<strong>'.$i.'楼</strong> ' : '').( $line['userurl'] ? '<a href="'.$line['userurl'].'" target="_blank"> '.$line['username'].' </a>' : $line['username']).($line['uid'] == $post_uid ? ' <span><a href="'.site_url('author/'.$line['username']).'" title ="点击查看作者所有作品">文章作者</a></span>' : '').'</p>';
+                $html .= '<p class="username">'.($line['reid'] == 0 ? '<strong>'.$i.'楼</strong> ' : '').( $line['userurl'] ? '<a href="'.(strpos($line['userurl'], 'http') === 0 ? $line['userurl'] : 'http://' . $line['userurl']).'" target="_blank"> '.$line['username'].' </a>' : $line['username']).($line['uid'] == $post_uid ? ' <span><a href="'.site_url('author/'.$line['username']).'" title ="点击查看作者所有作品">文章作者</a></span>' : '').'</p>';
                 $html .= '<p class="posttime">'.$line['posttime'].'</p></div>';
                 $html .= '<div class="comment_content">'.$line['content'].'</div>';
                 $html .= show_comments_list($array, $line['id'], $post_uid);
