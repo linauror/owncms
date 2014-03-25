@@ -61,9 +61,16 @@ class Post extends CI_Controller
             'reid' => intval($post['reid']),
             'username' => strip_tags($post['username']),
             'usermail' => strip_tags($post['usermail']),
+            'tipme' => isset($post['tipme']) ? 1 : 0,
             'userurl' => strip_tags($post['userurl']),
             'content' => strip_tags($post['content']),
         );
+        
+        $this->input->set_cookie('temp_username', $comment['username'], 365 * 3600 * 24);
+        $this->input->set_cookie('temp_usermail', $comment['usermail'], 365 * 3600 * 24);
+        $this->input->set_cookie('temp_tipme', $comment['tipme'], 365 * 3600 * 24);
+        $this->input->set_cookie('temp_userurl', $comment['userurl'], 365 * 3600 * 24);
+        
         $this->load->model('Comment_mdl');
         $comment = $this->Comment_mdl->add($comment);
         if ($comment) {
