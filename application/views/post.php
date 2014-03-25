@@ -43,14 +43,15 @@
                 <div>
                 <p>电子邮件地址不会被公开。 必填项已用 <span class="required">*</span> 标注</p>
                 <p>姓名 <span class="required">*</span></p>
-                <p><input type="text" name="username" class="username" value="" /></p>
+                <p><input type="text" name="username" class="username" value="<?=$this->input->cookie('temp_username')?>" /></p>
                 <p>电子邮件 <span class="required">*</span></p>
-                <p><input type="text" name="usermail" class="usermail" value="" /></p>
+                <p><input type="text" name="usermail" class="usermail" value="<?=$this->input->cookie('temp_usermail')?>" /></p>
                 <p>站点</p>
-                <p><input type="text" name="userurl" value="" /></p>
+                <p><input type="text" name="userurl" value="<?=$this->input->cookie('temp_userurl')?>" /></p>
                 </div>
                 <p>评论 <span class="required">*</span></p>
                 <p><textarea name="content" cols="10" rows="10" class="content"></textarea></p>
+                <p><label><input type="checkbox" name="tipme" checked="<?=$this->input->cookie('temp_tipme') ? 'true' : 'false'?>" value="1" /> 有回复通知我</label></p>
                 <p><input type="button" value="我不是机器人啦" title="点击证明你不是机器人" class="notRobotBtn" /> <input type="hidden" class="notRobot" name="notRobot" value="" time="" /> <input type="submit" value="发表评论" class="comment_submit" /></p>
             </form>
             <script type="text/javascript">
