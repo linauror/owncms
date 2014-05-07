@@ -278,6 +278,7 @@ if (!function_exists('sendmail'))
         $CI = & get_instance();
         include ('application/config/email.php');
         $CI->load->library('email', $config);
+        $CI->email->set_newline("\r\n");
         $CI->email->from($config['smtp_user'], $config['smtp_user']);
         $CI->email->to($to);
         $CI->email->subject($subject);

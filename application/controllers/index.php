@@ -43,6 +43,7 @@ class Index extends CI_Controller
         $html['friendlink'] = $this->Friendlink_mdl->get_list(array('ishidden' => 0));
         $this->load->view('index', $html);
     }
+
 }
 
 /* End of file index.php */
