@@ -492,7 +492,7 @@ class Post_mdl extends CI_Model
 	 */
 	public function updateRelation($keyId = 0, $valueIds = array(), $type = 'pt') 
     {
-        if (! $keyId || ! $type) {
+        if (! $keyId || ! $valueIds || ! $type) {
             return false;
         }
         
