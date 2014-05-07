@@ -317,21 +317,16 @@ class Post_mdl extends CI_Model
             $tag = str_replace(' ', ',', $tag);
             $tags = explode(',', $tag);
             $tags = array_filter($tags);
-            $tags = array_unique($tags);
-            
-            $tags = array_map(function($v){return strtolower($v);}, $tags);
-            
+            $tags = array_unique($tags);            
             $this->db->where_in('tag', $tags);
             $have = $this->db->get(self::TABLE_TAG)->result_array();
             $haved = getSubByKey($have, 'tag');
-            
-            $left = array_diff($tags, $haved);
+            $left = array_diff($tags, $haved);            
             if (count($left)) {
                 $sql = implode("'),('", $left);
                 $sql = "('" . $sql . "')";
                 $this->db->query('INSERT INTO '.self::TABLE_TAG.' (tag) VALUES '.$sql);
             }
-            
             $this->db->where_in('tag', $tags);
             $query = $this->db->get(self::TABLE_TAG)->result_array();
             return getSubByKey($query, 'id');
@@ -497,11 +492,11 @@ class Post_mdl extends CI_Model
 	 */
 	public function updateRelation($keyId = 0, $valueIds = array(), $type = 'pt') 
     {
-        if (! $keyId || ! $valueIds || ! $type) {
+        if (! $keyId || ! $type) {
             return false;
         }
-
-        if (! is_array($valueIds)) {
+        
+        if (! is_array($valueIds) || $valueIds) {
             $valueIds = explode(',', $valueIds);
         }        
         
