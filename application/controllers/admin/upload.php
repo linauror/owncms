@@ -28,7 +28,6 @@ class Upload extends CI_Controller
      */
     public function upload()
     {
-        $baseurl = base_url();
         include(getcwd() . '/application/config/upload.php');
         $FILES = array_keys($_FILES);
         $config['fileinput'] = $FILES[0];
@@ -47,7 +46,7 @@ class Upload extends CI_Controller
         } else {
             $data = $this->upload->data();
             if (getimagesize($data['full_path'])) $this->watermark($data['full_path']); //是图片才会处理水印
-			$url = $baseurl.$new_upload_path.$data['file_name'];
+			$url = '/' . $new_upload_path.$data['file_name'];
             $localname = $data['client_name'];
             //写入数据库
             $this->load->model('Media_mdl');
