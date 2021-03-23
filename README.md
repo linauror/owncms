@@ -1,4 +1,4 @@
-##关于OWNCMS
+## 关于OWNCMS
 
 OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久之前写的，前台演示模板来源于wordpress默认模板。
 
@@ -10,7 +10,7 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久
 
 ![程序截图](http://www.linauror.com/static/static/upload/201305/aa299900b080c3a180df99f1afeeb25d.jpg)
 
-##安装
+## 安装
 
 * 解压程序文件到网站根目录
 
@@ -18,5 +18,5 @@ OWNCMS文件结构和主要代码完全基于CI，后台模板属于本人很久
 
 * 默认重写的url，如服务器不支持URL重写，可修改`application/config/config.php中$config['index_page']`的值改为`index.php`，并删除根目录下`.htaccess`
 
-##使用
+## 使用
 * 后台默认账号密码：`admin`，`admin`，拥有最高权限
